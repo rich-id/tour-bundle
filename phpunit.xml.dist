@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" colors="true" bootstrap="vendor/autoload.php" failOnWarning="true" failOnRisky="true" forceCoversAnnotation="true">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">.</directory>
+    </include>
+    <exclude>
+      <directory>bin</directory>
+      <directory>var</directory>
+      <directory>DependencyInjection</directory>
+      <directory>Resources</directory>
+      <directory>Tests</directory>
+      <directory>vendor</directory>
+      <file>phpunit-filter.php</file>
+      <file>RichIdTourBundle.php</file>
+    </exclude>
+  </coverage>
+
+  <extensions>
+    <extension class="RichCongress\TestFramework\PHPUnitExtension">
+      <arguments>
+        <string>RichCongress\WebTestBundle\TestHook</string>
+      </arguments>
+    </extension>
+  </extensions>
+
+  <php>
+    <ini name="error_reporting" value="-1"/>
+    <server name="KERNEL_CLASS" value="RichId\TourBundle\Tests\Resources\config\TestKernel"/>
+
+    <!-- ###+ symfony/framework-bundle ### -->
+    <env name="APP_ENV" value="test"/>
+    <env name="APP_SECRET" value="AppSecret"/>
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+    <!-- ###- symfony/framework-bundle ### -->
+  </php>
+
+  <testsuites>
+    <testsuite name="Project Test Suite">
+      <directory suffix="Test.php">Tests</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

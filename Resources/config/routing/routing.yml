@@ -1,0 +1,4 @@
+rich_id_tour_perform:
+    path:  /visite
+    controller: RichId\TourBundle\Controller\TourPerformController::perform
+    methods:  [ GET ]

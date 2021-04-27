@@ -1,0 +1,46 @@
+{
+    "name": "rich-id/tour-bundle",
+    "description": "A tour bundle for Symfony 4.4",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "RichId",
+            "homepage": "https://www.rich-id.fr"
+        }
+    ],
+    "support": {
+        "email": "team-devs@rich-id.io",
+        "source": "https://github.com/rich-id/tour-bundle",
+        "docs": "https://github.com/rich-id/tour-bundle/blob/master/README.md",
+        "issues": "https://github.com/rich-id/tour-bundle/issues"
+    },
+    "require": {
+        "php": ">=7.3",
+        "doctrine/doctrine-migrations-bundle": "^2.0",
+        "doctrine/orm": "^2.7",
+        "richcongress/bundle-toolbox": "*",
+        "symfony/http-foundation": "^4.4",
+        "symfony/security-bundle": "4.4",
+        "symfony/twig-bundle": "^4.4"
+    },
+    "require-dev": {
+        "richcongress/test-suite": "^0.1",
+        "infection/infection": "^0.16.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "RichId\\TourBundle\\": ""
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RichId\\TourBundle\\Tests\\": "Tests/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin",
+        "discard-changes": true,
+        "sort-packages": true
+    }
+}
