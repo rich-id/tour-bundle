@@ -21,7 +21,7 @@
         "doctrine/orm": "^2.7",
         "richcongress/bundle-toolbox": "*",
         "symfony/http-foundation": "^4.4",
-        "symfony/security-bundle": "4.4",
+        "symfony/security-bundle": "4.0",
         "symfony/twig-bundle": "^4.4"
     },
     "require-dev": {
