@@ -22,19 +22,23 @@ class UserHasAccessToTour
     /** @var UserTourExist */
     private $userTourExist;
 
+    /** @var IsTourDisabled */
+    private $isTourDisabled;
+
     /** @var UserTourPerformedRepository */
     private $userTourPerformedRepository;
 
-    public function __construct(Security $security, UserTourExist $userTourExist, UserTourPerformedRepository $userTourPerformedRepository)
+    public function __construct(Security $security, UserTourExist $userTourExist, IsTourDisabled $isTourDisabled, UserTourPerformedRepository $userTourPerformedRepository)
     {
         $this->security = $security;
         $this->userTourExist = $userTourExist;
+        $this->isTourDisabled = $isTourDisabled;
         $this->userTourPerformedRepository = $userTourPerformedRepository;
     }
 
     public function __invoke(string $tour): bool
     {
-        if (!($this->userTourExist)($tour)) {
+        if (!($this->userTourExist)($tour) || ($this->isTourDisabled)($tour)) {
             return false;
         }
 

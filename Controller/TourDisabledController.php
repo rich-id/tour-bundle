@@ -19,12 +19,12 @@ use Symfony\Component\HttpFoundation\Response;
 class TourDisabledController extends AbstractController
 {
     /** @IsGranted("ROLE_RICH_ID_TOUR_ADMIN") */
-    public function post(Request $request, DisabledTour $disabledTour, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, EnabledTour $enabledTour, EntityManagerInterface $entityManager): Response
     {
         $tour = $request->get('tour', '');
 
         try {
-            $disabledTour($tour);
+            $enabledTour($tour);
             $entityManager->flush();
 
             return new Response();
@@ -34,12 +34,12 @@ class TourDisabledController extends AbstractController
     }
 
     /** @IsGranted("ROLE_RICH_ID_TOUR_ADMIN") */
-    public function delete(Request $request, EnabledTour $enabledTour, EntityManagerInterface $entityManager): Response
+    public function post(Request $request, DisabledTour $disabledTour, EntityManagerInterface $entityManager): Response
     {
         $tour = $request->get('tour', '');
 
         try {
-            $enabledTour($tour);
+            $disabledTour($tour);
             $entityManager->flush();
 
             return new Response();

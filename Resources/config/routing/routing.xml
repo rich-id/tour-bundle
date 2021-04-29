@@ -4,6 +4,14 @@
         xsi:schemaLocation="http://symfony.com/schema/routing
     https://symfony.com/schema/routing/routing-1.0.xsd">
 
+    <route id="rich_id_enabled_tour" path="/rich-id-visites"
+           controller="RichId\TourBundle\Controller\TourDisabledController::delete"
+           methods="DELETE" />
+
+    <route id="rich_id_disabled_tour" path="/rich-id-visites"
+           controller="RichId\TourBundle\Controller\TourDisabledController::resetTours"
+           methods="POST" />
+
     <route id="rich_id_tour_perform" path="/rich-id-visite"
            controller="RichId\TourBundle\Controller\TourPerformController::perform"
            methods="GET" />

@@ -3,11 +3,13 @@
 namespace RichId\TourBundle\UseCase;
 
 use Doctrine\ORM\EntityManagerInterface;
+use RichId\TourBundle\Exception\DisabledTourException;
 use RichId\TourBundle\Exception\NotAuthenticatedException;
 use RichId\TourBundle\Entity\UserTourInterface;
 use RichId\TourBundle\Entity\UserTourPerformed;
 use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Repository\UserTourPerformedRepository;
+use RichId\TourBundle\Rule\IsTourDisabled;
 use RichId\TourBundle\Validator\UserTourExist;
 use Symfony\Component\Security\Core\Security;
 
@@ -29,6 +31,9 @@ class PerformTour
     /** @var UserTourExist */
     private $userTourExist;
 
+    /** @var IsTourDisabled */
+    private $isTourDisabled;
+
     /** @var UserTourPerformedRepository */
     private $userTourPerformedRepository;
 
@@ -36,11 +41,13 @@ class PerformTour
         Security $security,
         EntityManagerInterface $entityManager,
         UserTourExist $userTourExist,
+        IsTourDisabled $isTourDisabled,
         UserTourPerformedRepository $userTourPerformedRepository
     ) {
         $this->security = $security;
         $this->entityManager = $entityManager;
         $this->userTourExist = $userTourExist;
+        $this->isTourDisabled = $isTourDisabled;
         $this->userTourPerformedRepository = $userTourPerformedRepository;
     }
 
@@ -48,6 +55,10 @@ class PerformTour
     {
         if (!($this->userTourExist)($tour)) {
             throw new NotFoundTourException($tour);
+        }
+
+        if (($this->isTourDisabled)($tour)) {
+            throw new DisabledTourException($tour);
         }
 
         $user = $this->security->getUser();
