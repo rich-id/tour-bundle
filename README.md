@@ -12,11 +12,15 @@ This version of the bundle requires Symfony 4.4+ and PHP 7.3+.
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/rich-id/tour-bundle/issues)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
+# Quick start
+
+The tour-bundle allows you to manage guided tour for the user
 
 # Table of content
 
 1. [Installation](#1-installation)
 2. [Getting started](#2-getting-started)
+    - [Configuration](Docs/Configuration.md)
 3. [Versioning](#3-versioning)
 4. [Contributing](#4-contributing)
 5. [Hacking](#5-hacking)
@@ -27,11 +31,44 @@ This version of the bundle requires Symfony 4.4+ and PHP 7.3+.
 
 This version of the bundle requires Symfony 4.4+ and PHP 7.3+.
 
+### 1.1 Composer
+
 ```bash
 composer require rich-id/tour-bundle
 ```
 
-# 2 Getting started
+### 1.2 Bundles declaration
+
+After the installation, make sure that the bundle are declared correctly within the Kernel's bundles list.
+
+```php
+RichId\TourBundle\RichIdTourBundle::class => ['all' => true]
+```
+
+## 1.3 Mandatory configuration
+
+Add in `config/routes` the definition of the bundle routes:
+
+
+```yaml
+rich_id_tour:
+    resource: "@RichIdTourBundle/Resources/config/routing/routing.yml"
+```
+
+Add the necessary configuration in `rich_id_tour.yaml`:
+
+```yaml
+rich_id_tour:
+    user_class: App\Entity\DummyUser  # Your User class
+```
+
+## 1.4 Doctrine mapping
+
+The bundle provides entities. You must therefore modify the structure of your database by generating a migration.
+
+# 2. Getting started
+
+- [Configuration](Docs/Configuration.md)
 
 # 3. Versioning
 
