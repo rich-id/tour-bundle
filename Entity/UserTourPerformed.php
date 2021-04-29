@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @ORM\Entity(repositoryClass="RichId\TourBundle\Repository\UserTourPerformedRepository")
- * @ORM\Table(name="rich_id_user_tour_performed"
+ * @ORM\Table(name="rich_id_user_tour_performed")
  */
 class UserTourPerformed
 {
