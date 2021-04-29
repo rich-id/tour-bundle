@@ -5,6 +5,7 @@ namespace RichId\TourBundle\Rule;
 use Doctrine\ORM\EntityManagerInterface;
 use RichId\TourBundle\Entity\UserTourInterface;
 use RichId\TourBundle\Entity\UserTourPerformed;
+use RichId\TourBundle\Repository\UserTourPerformedRepository;
 use RichId\TourBundle\Validator\UserTourExist;
 use Symfony\Component\Security\Core\Security;
 
@@ -23,14 +24,14 @@ class UserHasAccessToTour
     /** @var UserTourExist */
     private $userTourExist;
 
-    /** @var EntityManagerInterface */
-    private $entityManager;
+    /** @var UserTourPerformedRepository */
+    private $userTourPerformedRepository;
 
-    public function __construct(Security $security, UserTourExist $userTourExist, EntityManagerInterface $entityManager)
+    public function __construct(Security $security, UserTourExist $userTourExist, UserTourPerformedRepository $userTourPerformedRepository)
     {
         $this->security = $security;
         $this->userTourExist = $userTourExist;
-        $this->entityManager = $entityManager;
+        $this->userTourPerformedRepository = $userTourPerformedRepository;
     }
 
     public function __invoke(string $tour): bool
@@ -45,8 +46,7 @@ class UserHasAccessToTour
             return false;
         }
 
-        $userTourPerformedRepository = $this->entityManager->getRepository(UserTourPerformed::class);
-        $existingEntity = $userTourPerformedRepository->findOneBy(
+        $existingEntity = $this->userTourPerformedRepository->findOneBy(
             [
                 'user' => $user->getId(),
                 'tour' => $tour,

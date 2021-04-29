@@ -52,7 +52,7 @@ Add in `config/routes` the definition of the bundle routes:
 
 ```yaml
 rich_id_tour:
-    resource: "@RichIdTourBundle/Resources/config/routing/routing.yml"
+    resource: "@RichIdTourBundle/Resources/config/routing/routing.xml"
 ```
 
 Add the necessary configuration in `rich_id_tour.yaml`:

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing
+    https://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="rich_id_tour_perform" path="/rich-id-visite"
+           controller="RichId\TourBundle\Controller\TourPerformController::perform"
+           methods="GET" />
+
+    <route id="rich_id_reset_performed_tours" path="/rich-id-visites"
+           controller="RichId\TourBundle\Controller\TourPerformController::resetTours"
+           methods="DELETE" />
+</routes>

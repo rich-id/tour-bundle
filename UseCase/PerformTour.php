@@ -7,6 +7,7 @@ use RichId\TourBundle\Exception\NotAuthenticatedException;
 use RichId\TourBundle\Entity\UserTourInterface;
 use RichId\TourBundle\Entity\UserTourPerformed;
 use RichId\TourBundle\Exception\NotFoundTourException;
+use RichId\TourBundle\Repository\UserTourPerformedRepository;
 use RichId\TourBundle\Validator\UserTourExist;
 use Symfony\Component\Security\Core\Security;
 
@@ -28,11 +29,19 @@ class PerformTour
     /** @var UserTourExist */
     private $userTourExist;
 
-    public function __construct(Security $security, EntityManagerInterface $entityManager, UserTourExist $userTourExist)
-    {
+    /** @var UserTourPerformedRepository */
+    private $userTourPerformedRepository;
+
+    public function __construct(
+        Security $security,
+        EntityManagerInterface $entityManager,
+        UserTourExist $userTourExist,
+        UserTourPerformedRepository $userTourPerformedRepository
+    ) {
         $this->security = $security;
         $this->entityManager = $entityManager;
         $this->userTourExist = $userTourExist;
+        $this->userTourPerformedRepository = $userTourPerformedRepository;
     }
 
     public function __invoke(string $tour): void
@@ -47,8 +56,7 @@ class PerformTour
             throw new NotAuthenticatedException();
         }
 
-        $userTourPerformedRepository = $this->entityManager->getRepository(UserTourPerformed::class);
-        $existingEntity = $userTourPerformedRepository->findOneBy(
+        $existingEntity = $this->userTourPerformedRepository->findOneBy(
             [
                 'user' => $user->getId(),
                 'tour' => $tour,
