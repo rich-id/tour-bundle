@@ -19,9 +19,18 @@ class Configuration extends AbstractConfiguration
     {
         $children = $rootNode->children();
 
+        $this->buildUserClassNode($children);
         $this->buildUserToursNode($children);
 
         $children->end();
+    }
+
+    protected function buildUserClassNode(NodeBuilder $nodeBuilder): NodeBuilder
+    {
+        return $nodeBuilder
+            ->scalarNode('user_class')
+            ->isRequired()
+            ->end();
     }
 
     protected function buildUserToursNode(NodeBuilder $nodeBuilder): NodeBuilder

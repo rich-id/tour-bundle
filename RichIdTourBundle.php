@@ -4,6 +4,8 @@ namespace RichId\TourBundle;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use RichCongress\BundleToolbox\Configuration\AbstractBundle;
+use RichId\TourBundle\DependencyInjection\Compiler\DoctrineResolveTargetEntityPass;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -20,6 +22,8 @@ class RichIdTourBundle extends AbstractBundle
         parent::build($container);
 
         $this->addRegisterMappingsPass($container);
+
+        $container->addCompilerPass(new DoctrineResolveTargetEntityPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 1000);
     }
 
     private function addRegisterMappingsPass(ContainerBuilder $container)
