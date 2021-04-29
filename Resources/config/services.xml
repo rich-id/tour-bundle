@@ -7,10 +7,11 @@
     <services>
         <defaults autowire="true" autoconfigure="true" public="false"/>
 
+        <service id="RichId\TourBundle\Controller\TourDisabledController" />
         <service id="RichId\TourBundle\Controller\TourPerformController" />
         <service id="RichId\TourBundle\Repository\UserTourPerformedRepository" />
         <service id="RichId\TourBundle\Rule\UserHasAccessToTour" />
-        <service id="RichId\TourBundle\Twig\Extension\UserTourExtension" />
+        <service id="RichId\TourBundle\Twig\Extension\TourExtension" />
         <service id="RichId\TourBundle\UseCase\PerformTour" />
         <service id="RichId\TourBundle\Validator\UserTourExist" />
     </services>

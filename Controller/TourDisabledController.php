@@ -3,28 +3,28 @@
 namespace RichId\TourBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use RichId\TourBundle\UseCase\PerformTour;
-use RichId\TourBundle\UseCase\ResetPerformedTours;
+use RichId\TourBundle\UseCase\DisabledTour;
+use RichId\TourBundle\UseCase\EnabledTour;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class TourPerformController.
+ * Class TourDisabledController.
  *
  * @package   RichId\TourBundle\Controller
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  */
-class TourPerformController extends AbstractController
+class TourDisabledController extends AbstractController
 {
-    /** @IsGranted("IS_AUTHENTICATED_FULLY") */
-    public function perform(Request $request, PerformTour $performTour, EntityManagerInterface $entityManager): Response
+    /** @IsGranted("ROLE_RICH_ID_TOUR_ADMIN") */
+    public function post(Request $request, DisabledTour $disabledTour, EntityManagerInterface $entityManager): Response
     {
         $tour = $request->get('tour', '');
 
         try {
-            $performTour($tour);
+            $disabledTour($tour);
             $entityManager->flush();
 
             return new Response();
@@ -34,12 +34,13 @@ class TourPerformController extends AbstractController
     }
 
     /** @IsGranted("ROLE_RICH_ID_TOUR_ADMIN") */
-    public function resetTours(Request $request, ResetPerformedTours $resetPerformedTours): Response
+    public function delete(Request $request, EnabledTour $enabledTour, EntityManagerInterface $entityManager): Response
     {
         $tour = $request->get('tour', '');
 
         try {
-            $resetPerformedTours($tour);
+            $enabledTour($tour);
+            $entityManager->flush();
 
             return new Response();
         } catch (\Throwable $throwable) {

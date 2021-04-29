@@ -2,9 +2,7 @@
 
 namespace RichId\TourBundle\Rule;
 
-use Doctrine\ORM\EntityManagerInterface;
 use RichId\TourBundle\Entity\UserTourInterface;
-use RichId\TourBundle\Entity\UserTourPerformed;
 use RichId\TourBundle\Repository\UserTourPerformedRepository;
 use RichId\TourBundle\Validator\UserTourExist;
 use Symfony\Component\Security\Core\Security;

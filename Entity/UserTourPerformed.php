@@ -10,18 +10,16 @@ use Doctrine\ORM\Mapping as ORM;
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
- * @ORM\Entity
- * @ORM\Table(
- *     name="rich_id_user_tour_performed",
- * )
+ * @ORM\Entity(repositoryClass="RichId\TourBundle\Repository\UserTourPerformedRepository")
+ * @ORM\Table(name="rich_id_user_tour_performed"
  */
 class UserTourPerformed
 {
     /**
-     * @var @var string
+     * @var string
      *
      * @ORM\Id
-     * @ORM\Column(type="string", length=50, nullable=false, name="tour")
+     * @ORM\Column(type="string", length=255, nullable=false, name="tour")
      *
      */
     protected $tour;
