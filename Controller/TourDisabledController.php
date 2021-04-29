@@ -8,6 +8,7 @@ use RichId\TourBundle\UseCase\EnabledTour;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Class TourDisabledController.
@@ -18,9 +19,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class TourDisabledController extends AbstractController
 {
-    /** @IsGranted("ROLE_RICH_ID_TOUR_ADMIN") */
     public function delete(Request $request, EnabledTour $enabledTour, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
+            throw new AccessDeniedHttpException();
+        }
+
         $tour = $request->get('tour', '');
 
         try {
@@ -33,9 +37,12 @@ class TourDisabledController extends AbstractController
         }
     }
 
-    /** @IsGranted("ROLE_RICH_ID_TOUR_ADMIN") */
     public function post(Request $request, DisabledTour $disabledTour, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
+            throw new AccessDeniedHttpException();
+        }
+
         $tour = $request->get('tour', '');
 
         try {

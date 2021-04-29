@@ -8,6 +8,7 @@ use RichId\TourBundle\UseCase\ResetPerformedTours;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Class TourPerformController.
@@ -18,10 +19,14 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class TourPerformController extends AbstractController
 {
-    /** @IsGranted("IS_AUTHENTICATED_FULLY") */
     public function perform(Request $request, PerformTour $performTour, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedHttpException();
+        }
+
         $tour = $request->get('tour', '');
+
 
         try {
             $performTour($tour);
@@ -33,9 +38,12 @@ class TourPerformController extends AbstractController
         }
     }
 
-    /** @IsGranted("ROLE_RICH_ID_TOUR_ADMIN") */
     public function resetTours(Request $request, ResetPerformedTours $resetPerformedTours): Response
     {
+        if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
+            throw new AccessDeniedHttpException();
+        }
+
         $tour = $request->get('tour', '');
 
         try {
