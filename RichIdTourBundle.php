@@ -24,10 +24,13 @@ class RichIdTourBundle extends AbstractBundle
 
     private function addRegisterMappingsPass(ContainerBuilder $container)
     {
-        $mappings = array(
-            realpath(__DIR__.'/Resources/config/doctrine-mapping') => 'RichId\TourBundle\Model',
-        );
-
-        $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings));
+        if (class_exists(DoctrineOrmMappingsPass::class)) {
+            $container->addCompilerPass(
+                DoctrineOrmMappingsPass::createAnnotationMappingDriver(
+                    ['RichId\TourBundle\Entity'],
+                    [__DIR__ . '/Entity']
+                )
+            );
+        }
     }
 }

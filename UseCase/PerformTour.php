@@ -4,8 +4,8 @@ namespace RichId\TourBundle\UseCase;
 
 use Doctrine\ORM\EntityManagerInterface;
 use RichId\TourBundle\Exception\NotAuthenticatedException;
-use RichId\TourBundle\Model\UserTourInterface;
-use RichId\TourBundle\Model\UserTourPerformed;
+use RichId\TourBundle\Entity\UserTourInterface;
+use RichId\TourBundle\Entity\UserTourPerformed;
 use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Validator\UserTourExist;
 use Symfony\Component\Security\Core\Security;
