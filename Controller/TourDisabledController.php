@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use RichId\TourBundle\UseCase\DisabledTour;
 use RichId\TourBundle\UseCase\EnabledTour;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -19,7 +20,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class TourDisabledController extends AbstractController
 {
-    public function delete(Request $request, EnabledTour $enabledTour, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, EnabledTour $enabledTour, EntityManagerInterface $entityManager): JsonResponse
     {
         if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
             throw new AccessDeniedHttpException();
@@ -31,13 +32,13 @@ class TourDisabledController extends AbstractController
             $enabledTour($tour);
             $entityManager->flush();
 
-            return new Response();
+            return new JsonResponse();
         } catch (\Throwable $throwable) {
-            return new Response($throwable->getMessage(), Response::HTTP_NOT_FOUND);
+            return new JsonResponse($throwable->getMessage(), Response::HTTP_NOT_FOUND);
         }
     }
 
-    public function post(Request $request, DisabledTour $disabledTour, EntityManagerInterface $entityManager): Response
+    public function post(Request $request, DisabledTour $disabledTour, EntityManagerInterface $entityManager): JsonResponse
     {
         if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
             throw new AccessDeniedHttpException();
@@ -49,9 +50,9 @@ class TourDisabledController extends AbstractController
             $disabledTour($tour);
             $entityManager->flush();
 
-            return new Response();
+            return new JsonResponse();
         } catch (\Throwable $throwable) {
-            return new Response($throwable->getMessage(), Response::HTTP_NOT_FOUND);
+            return new JsonResponse($throwable->getMessage(), Response::HTTP_NOT_FOUND);
         }
     }
 }
