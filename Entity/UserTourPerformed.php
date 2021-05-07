@@ -27,6 +27,7 @@ class UserTourPerformed
     /**
      * @var UserTourInterface
      *
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="RichId\TourBundle\Entity\UserTourInterface")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */

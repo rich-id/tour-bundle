@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="{{ app.request is not null ? app.request.locale }}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title></title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="author" content="Rich ID">
+
+    <style>
+        {% include 'RichIdTourBundle::style.css.twig' %}
+    </style>
+
+    {% block custom_head %}{% endblock %}
+</head>
+
+<body>
+<div class="rich-id-administration">
+    <div id="rich-id-alerts"></div>
+    <div class="rich-id-administration-title">
+        <div>{{ 'rich_id_tour.administration.tour.title'|trans({}, 'tour') }}</div>
+    </div>
+    {% set statistics = getToursStatistics() %}
+
+    {% for tour in tours|sort %}
+        <div class="rich-id-tour-actions">
+            <div class="rich-id-tour-name">{{ tour }}</div>
+
+            <div class="rich-id-tour-toggle">
+                <input id="form_{{ tour }}" name="form[{{ tour }}]" type="checkbox" onclick="richIdTourActivationChange('{{ tour }}');">
+                <label for="form_{{ tour }}">{{ 'rich_id_tour.administration.is_enabled'|trans({}, 'tour') }}</label>
+            </div>
+
+            <button class="rich-id-tour-button" onclick="richIdTourReset('{{ tour }}');">
+                {{ 'rich_id_tour.administration.force_tour_reset'|trans({}, 'tour') }}
+            </button>
+
+            <div class="statistics">
+                {{ 'rich_id_tour.administration.performed_number'|trans({'%count%': statistics[tour]|default(0)}, 'tour') }}
+            </div>
+        </div>
+    {% endfor %}
+
+    {% if tours is empty %}
+        <div>
+            <strong>{{ 'rich_id_tour.administration.tour.empty'|trans({}, 'tour') }}</strong>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    window.richIdTourAddAlert = function (message) {
+        var alert = document.createElement('div');
+        var alertContent = document.createTextNode(message);
+        alert.classList.add('rich-id-alert');
+        alert.appendChild(alertContent);
+
+        document.getElementById('rich-id-alerts').appendChild(alert);
+
+        var timeout = setTimeout(function () {
+            document.getElementById('rich-id-alerts').removeChild(alert);
+        }, 3000);
+
+        alert.addEventListener('click', function () {
+            clearTimeout(timeout);
+            document.getElementById('rich-id-alerts').removeChild(alert);
+        });
+    };
+
+    {% for tour in tours %}
+        {% if not isTourDisabled(tour) %}
+            document.getElementById('{{ 'form_' ~ tour }}').checked = true;
+        {% endif %}
+    {% endfor %}
+
+    document.addEventListener("DOMContentLoaded", function () {
+        window.richIdTourActivationChange = function (tourId) {
+            var xhr = new XMLHttpRequest();
+
+            if (document.getElementById('form_' + tourId).checked) {
+                xhr.open('DELETE', '{{ path('rich_id_tour_enable_tour') }}' + '?tour=' + tourId);
+                xhr.send();
+
+                xhr.onload = function() {
+                    var message = '{{ 'rich_id_tour.administration.tour_enabled'|trans({}, 'tour')|e('js') }}';
+                    richIdTourAddAlert(message.replaceAll('%tour%', tourId));
+                };
+            } else {
+                xhr.open('POST', '{{ path('rich_id_tour_disable_tour') }}' + '?tour=' + tourId);
+                xhr.send();
+
+                xhr.onload = function() {
+                    var message = '{{ 'rich_id_tour.administration.tour_disabled'|trans({}, 'tour')|e('js') }}';
+                    richIdTourAddAlert(message.replaceAll('%tour%', tourId));
+                };
+            }
+        };
+
+        window.richIdTourReset = function (tourId) {
+            if (confirm('{{ 'rich_id_tour.administration.force_tour_reset_confirmation'|trans({}, 'tour')|e('js') }}')) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('DELETE', '{{ path('rich_id_tour_reset_performed_tours') }}' + '?tour=' + tourId);
+                xhr.send();
+
+                xhr.onload = function() {
+                    richIdTourAddAlert('{{ 'rich_id_tour.administration.tour_reseted'|trans({}, 'tour')|e('js') }}');
+                };
+            }
+        };
+    });
+</script>
+</body>
+</html>

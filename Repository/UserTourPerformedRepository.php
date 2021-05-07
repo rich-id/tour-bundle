@@ -22,12 +22,31 @@ class UserTourPerformedRepository extends ServiceEntityRepository
 
     public function deleteByTour(string $tour): void
     {
-        $qb = $this->createQueryBuilder('t');
+        $qb = $this->_em->createQueryBuilder();
 
-        $qb->delete('t')
-            ->where('t.tour = :tour')
-            ->setParameter('tour', $tour)
+        $qb->delete(UserTourPerformed::class, 't')
+            ->where('t.tour = :name')
+            ->setParameter('name', $tour)
             ->getQuery()
             ->execute();
+    }
+
+    public function getStatistics(): array
+    {
+        $qb = $this->createQueryBuilder('t');
+
+        $statistics = [];
+
+        $datas = $qb->select('t.tour')
+            ->addSelect('COUNT(t.user)')
+            ->groupBy('t.tour')
+            ->getQuery()
+            ->getResult();
+
+        foreach ($datas as $data) {
+            $statistics[$data['tour']] = (int) $data[1];
+        }
+
+        return $statistics;
     }
 }

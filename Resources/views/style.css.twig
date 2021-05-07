@@ -1,0 +1,162 @@
+:root {
+    --rich-id-tour-label-color: #333333;
+    --rich-id-tour-toggle-background: #767676;
+    --rich-id-tour-toggle-checked-background: #5cb85c;
+
+    --rich-id-tour-button-color: #ffffff;
+    --rich-id-tour-button-background: #ce5955;
+
+    --rich-id-tour-toggle-success-alert-background-color: #5cb85c;
+
+    --rich-id-tour-administration-background-color: #eee;
+    --rich-id-tour-administration-title-color: #333333;
+
+    --rich-id-tour-font-family: Helvetica, Arial, sans-serif;
+}
+
+
+body {
+    background-color: var(--rich-id-tour-administration-background-color);
+    font-family: var(--rich-id-tour-font-family);
+    height: 100vh;
+    margin: 0;
+}
+
+.rich-id-administration {
+    padding: 35px;
+}
+
+.rich-id-administration-title {
+    padding-bottom: 40px;
+}
+
+.rich-id-administration-title div {
+    border-bottom: 2px solid var(--rich-id-tour-administration-title-color);
+    color: var(--rich-id-tour-administration-title-color);
+    display: inline;
+    font-size: 25px;
+    padding-right: 5px;
+}
+
+.rich-id-tour-name {
+    color: var(--rich-id-tour-administration-title-color);
+    font-size: 16px;
+    font-weight: 600;
+    padding-bottom: 15px;
+}
+
+.rich-id-tour-actions {
+    padding-bottom: 15px;
+    border-left: 2px solid var(--rich-id-tour-administration-title-color);
+    padding-left: 20px;
+}
+
+.rich-id-tour-actions button {
+    margin-top: 10px;
+}
+
+.rich-id-tour-actions .statistics {
+    color: var(--rich-id-tour-label-color);
+    padding-top: 10px;
+}
+
+.rich-id-tour-actions + .rich-id-tour-actions {
+    margin-top: 25px;
+}
+
+{# Alerts #}
+#rich-id-alerts {
+    padding-top: 15px;
+    position: absolute;
+    right: 15px;
+    top: 0;
+    width: 275px;
+    z-index: 500;
+}
+
+#rich-id-alerts .rich-id-alert {
+    background-color: var(--rich-id-tour-toggle-success-alert-background-color);
+    box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.5);
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    padding: 1em;
+}
+
+{# Button #}
+.rich-id-tour-button {
+    background: var(--rich-id-tour-button-background);
+    border-radius: 5px;
+    border: none;
+    box-shadow: none;
+    color: var(--rich-id-tour-button-color);
+    font-weight: 500;
+    padding: 6px 15px;
+}
+
+.rich-id-tour-button:hover {
+    cursor: pointer;
+    filter: brightness(95%);
+}
+
+
+{# Toggle #}
+.rich-id-tour-toggle {
+    position: relative;
+}
+
+.rich-id-tour-toggle input[type="checkbox"] {
+    opacity: 0 !important;
+}
+
+.rich-id-tour-toggle input[type="checkbox"] + label {
+    color: var(--rich-id-tour-label-color);
+    left: 0;
+    padding: 0 0 0 50px;
+    position: absolute;
+    top: 0;
+}
+
+.rich-id-tour-toggle input[type="checkbox"] + label:before {
+    -moz-box-sizing: border-box;
+    -moz-transition: background-color 0.4s ease;
+    -webkit-box-sizing: border-box;
+    -webkit-transition: background-color 0.4s ease;
+    background-color: var(--rich-id-tour-toggle-background);
+    border-radius: 12px;
+    box-sizing: border-box;
+    content: '';
+    height: 24px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: background-color 0.4s ease;
+    width: 39px;
+}
+
+.rich-id-tour-toggle input[type="checkbox"]:checked + label:before {
+    background-color: var(--rich-id-tour-toggle-checked-background);
+}
+
+.rich-id-tour-toggle input[type="checkbox"] + label:after {
+    -moz-box-sizing: border-box;
+    -moz-transition: -moz-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+    -webkit-box-sizing: border-box;
+    -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+    background-color: #fff;
+    border-radius: 500rem;
+    box-sizing: border-box;
+    content: '';
+    height: 18px;
+    left: 4px;
+    position: absolute;
+    top: 3px;
+    transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+    width: 18px;
+}
+
+.rich-id-tour-toggle input[type="checkbox"]:checked + label:after {
+    transform: translateX(13px);
+}

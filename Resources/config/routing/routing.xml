@@ -19,4 +19,10 @@
     <route id="rich_id_tour_reset_performed_tours" path="/rich-id-tours/perform"
            controller="RichId\TourBundle\Controller\TourPerformController::resetTours"
            methods="DELETE" />
+
+
+    <route id="rich_id_tour_administration_tours" path="/administration/tours"
+           controller="RichId\TourBundle\Controller\AdministrationController::tours"
+           methods="GET" />
 </routes>
+

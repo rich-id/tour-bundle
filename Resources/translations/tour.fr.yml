@@ -1,0 +1,10 @@
+rich_id_tour.administration.force_tour_reset: Voir de nouveau la visite (tous les utilisteurs)
+rich_id_tour.administration.force_tour_reset_confirmation: Voulez-vous vraiment forcer le réaffichage de la visite ?
+rich_id_tour.administration.is_enabled: Actif ?
+rich_id_tour.administration.performed_number: "Nombre de vue: %count%"
+rich_id_tour.administration.tour.empty: Aucune visite configurée
+rich_id_tour.administration.tour.title: Activation / Désactivation des visites
+rich_id_tour.administration.tour_disabled: La visite "%tour%" a été désactivée
+rich_id_tour.administration.tour_enabled: La visite "%tour%" a été activée
+rich_id_tour.administration.tour_reseted: Forçage réalisé
+
