@@ -28,7 +28,6 @@ class TourPerformController extends AbstractController
 
         $tour = $request->get('tour', '');
 
-
         try {
             $performTour($tour);
             $entityManager->flush();
