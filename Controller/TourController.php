@@ -7,6 +7,7 @@ use RichId\TourBundle\Action\DisableTour;
 use RichId\TourBundle\Action\EnableTour;
 use RichId\TourBundle\Action\PerformTour;
 use RichId\TourBundle\Action\ResetPerformedTours;
+use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Exception\TourException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,8 +37,10 @@ class TourController extends AbstractController
             $entityManager->flush();
 
             return new JsonResponse();
-        } catch (TourException $e) {
+        } catch (NotFoundTourException $e) {
             return new JsonResponse($e->getMessage(), Response::HTTP_NOT_FOUND);
+        } catch (TourException $e) {
+            return new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 
@@ -54,8 +57,10 @@ class TourController extends AbstractController
             $entityManager->flush();
 
             return new JsonResponse();
-        } catch (TourException $e) {
+        } catch (NotFoundTourException $e) {
             return new JsonResponse($e->getMessage(), Response::HTTP_NOT_FOUND);
+        } catch (TourException $e) {
+            return new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 
@@ -72,8 +77,10 @@ class TourController extends AbstractController
             $entityManager->flush();
 
             return new JsonResponse();
-        } catch (TourException $e) {
+        } catch (NotFoundTourException $e) {
             return new JsonResponse($e->getMessage(), Response::HTTP_NOT_FOUND);
+        } catch (TourException $e) {
+            return new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 
@@ -89,8 +96,10 @@ class TourController extends AbstractController
             $resetPerformedTours($tour);
 
             return new JsonResponse();
-        } catch (TourException $e) {
+        } catch (NotFoundTourException $e) {
             return new JsonResponse($e->getMessage(), Response::HTTP_NOT_FOUND);
+        } catch (TourException $e) {
+            return new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 }
