@@ -26,74 +26,61 @@ class TourController extends AbstractController
 {
     public function enable(Request $request, EnableTour $enableTour, EntityManagerInterface $entityManager): JsonResponse
     {
-        if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
-            throw new AccessDeniedHttpException();
-        }
-
-        $tour = $request->get('tour', '');
-
-        try {
-            $enableTour($tour);
-            $entityManager->flush();
-
-            return new JsonResponse();
-        } catch (NotFoundTourException $e) {
-            return new JsonResponse($e->getMessage(), Response::HTTP_NOT_FOUND);
-        } catch (TourException $e) {
-            return new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
-        }
+        return $this->action(
+            $request,
+            'ROLE_RICH_ID_TOUR_ADMIN',
+            function (string $tourKeyname) use ($enableTour, $entityManager) {
+                $enableTour($tourKeyname);
+                $entityManager->flush();
+            }
+        );
     }
 
     public function disable(Request $request, DisableTour $disableTour, EntityManagerInterface $entityManager): JsonResponse
     {
-        if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
-            throw new AccessDeniedHttpException();
-        }
-
-        $tour = $request->get('tour', '');
-
-        try {
-            $disableTour($tour);
-            $entityManager->flush();
-
-            return new JsonResponse();
-        } catch (NotFoundTourException $e) {
-            return new JsonResponse($e->getMessage(), Response::HTTP_NOT_FOUND);
-        } catch (TourException $e) {
-            return new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
-        }
+        return $this->action(
+            $request,
+            'ROLE_RICH_ID_TOUR_ADMIN',
+            function (string $tourKeyname) use ($disableTour, $entityManager) {
+                $disableTour($tourKeyname);
+                $entityManager->flush();
+            }
+        );
     }
 
     public function perform(Request $request, PerformTour $performTour, EntityManagerInterface $entityManager): JsonResponse
     {
-        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw new AccessDeniedHttpException();
-        }
-
-        $tour = $request->get('tour', '');
-
-        try {
-            $performTour($tour);
-            $entityManager->flush();
-
-            return new JsonResponse();
-        } catch (NotFoundTourException $e) {
-            return new JsonResponse($e->getMessage(), Response::HTTP_NOT_FOUND);
-        } catch (TourException $e) {
-            return new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
-        }
+        return $this->action(
+            $request,
+            'IS_AUTHENTICATED_FULLY',
+            function (string $tourKeyname) use ($performTour, $entityManager) {
+                $performTour($tourKeyname);
+                $entityManager->flush();
+            }
+        );
     }
 
     public function resetPerformedTours(Request $request, ResetPerformedTours $resetPerformedTours): JsonResponse
     {
-        if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
+        return $this->action(
+            $request,
+            'ROLE_RICH_ID_TOUR_ADMIN',
+            function (string $tourKeyname) use ($resetPerformedTours) {
+                $resetPerformedTours($tourKeyname);
+            }
+        );
+    }
+
+    private function action(Request $request, string $role, callable $action): JsonResponse
+    {
+        if (!$this->isGranted($role)) {
             throw new AccessDeniedHttpException();
         }
 
         $tour = $request->get('tour', '');
 
         try {
-            $resetPerformedTours($tour);
+            $action($tour);
 
             return new JsonResponse();
         } catch (NotFoundTourException $e) {
