@@ -20,7 +20,6 @@
            controller="RichId\TourBundle\Controller\TourController::resetPerformedTours"
            methods="DELETE" />
 
-
     <route id="rich_id_tour_administration_tours" path="/administration/tours"
            controller="RichId\TourBundle\Controller\AdministrationController::tours"
            methods="GET" />

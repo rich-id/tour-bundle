@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Rule;
 
-use RichId\TourBundle\Repository\TourDisabledRepository;
+use RichId\TourBundle\Repository\TourRepository;
 
 /**
  * Class IsTourDisabled
@@ -13,18 +13,18 @@ use RichId\TourBundle\Repository\TourDisabledRepository;
  */
 class IsTourDisabled
 {
-    /** @var TourDisabledRepository */
-    private $tourDisabledRepository;
+    /** @var TourRepository */
+    private $tourRepository;
 
-    public function __construct(TourDisabledRepository $tourDisabledRepository)
+    public function __construct(TourRepository $tourRepository)
     {
-        $this->tourDisabledRepository = $tourDisabledRepository;
+        $this->tourRepository = $tourRepository;
     }
 
-    public function __invoke(string $tour): bool
+    public function __invoke(string $tourKeyname): bool
     {
-        $existingEntity = $this->tourDisabledRepository->findOneByTour($tour);
+        $tour = $this->tourRepository->findOneByKeyname($tourKeyname);
 
-        return null !== $existingEntity;
+        return $tour !== null && $tour->isDisabled();
     }
 }

@@ -78,7 +78,7 @@
             var xhr = new XMLHttpRequest();
 
             if (document.getElementById('form_' + tourId).checked) {
-                xhr.open('DELETE', '{{ path('rich_id_tour_enable_tour') }}' + '?tour=' + tourId);
+                xhr.open('POST', '{{ path('rich_id_tour_enable_tour') }}' + '?tour=' + tourId);
                 xhr.send();
 
                 xhr.onload = function() {

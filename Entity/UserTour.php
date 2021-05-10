@@ -4,23 +4,23 @@ namespace RichId\TourBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class UserTourPerformed.
+ * Class UserTour.
  *
  * @package   RichId\TourBundle\Entity
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
- * @ORM\Entity(repositoryClass="RichId\TourBundle\Repository\UserTourPerformedRepository")
- * @ORM\Table(name="rich_id_user_tour_performed")
+ * @ORM\Entity(repositoryClass="RichId\TourBundle\Repository\UserTourRepository")
+ * @ORM\Table(name="rich_id_user_tour")
  */
-class UserTourPerformed
+class UserTour
 {
     /**
-     * @var string
+     * @var Tour
      *
      * @ORM\Id
-     * @ORM\Column(type="string", length=255, nullable=false, name="tour")
-     *
+     * @ORM\ManyToOne(targetEntity="RichId\TourBundle\Entity\Tour")
+     * @ORM\JoinColumn(name="tour_keyname", referencedColumnName="keyname", nullable=false)
      */
     protected $tour;
 
@@ -33,12 +33,12 @@ class UserTourPerformed
      */
     protected $user;
 
-    public static function buildForUserAndTour(UserTourInterface $user, string $tour): self
+    public static function buildForTourAndUser(Tour $tour, UserTourInterface $user): self
     {
         $entity = new self();
 
-        $entity->user = $user;
         $entity->tour = $tour;
+        $entity->user = $user;
 
         return $entity;
     }

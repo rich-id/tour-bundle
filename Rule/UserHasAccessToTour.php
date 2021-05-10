@@ -3,7 +3,7 @@
 namespace RichId\TourBundle\Rule;
 
 use RichId\TourBundle\Entity\UserTourInterface;
-use RichId\TourBundle\Repository\UserTourPerformedRepository;
+use RichId\TourBundle\Repository\UserTourRepository;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -24,20 +24,20 @@ class UserHasAccessToTour
     /** @var IsTourDisabled */
     private $isTourDisabled;
 
-    /** @var UserTourPerformedRepository */
-    private $userTourPerformedRepository;
+    /** @var UserTourRepository */
+    private $userTourRepository;
 
-    public function __construct(Security $security, UserTourExists $userTourExists, IsTourDisabled $isTourDisabled, UserTourPerformedRepository $userTourPerformedRepository)
+    public function __construct(Security $security, UserTourExists $userTourExists, IsTourDisabled $isTourDisabled, UserTourRepository $userTourRepository)
     {
         $this->security = $security;
         $this->userTourExists = $userTourExists;
         $this->isTourDisabled = $isTourDisabled;
-        $this->userTourPerformedRepository = $userTourPerformedRepository;
+        $this->userTourRepository = $userTourRepository;
     }
 
-    public function __invoke(string $tour): bool
+    public function __invoke(string $tourKeyname): bool
     {
-        if (!($this->userTourExists)($tour) || ($this->isTourDisabled)($tour)) {
+        if (!($this->userTourExists)($tourKeyname) || ($this->isTourDisabled)($tourKeyname)) {
             return false;
         }
 
@@ -47,13 +47,8 @@ class UserHasAccessToTour
             return false;
         }
 
-        $existingEntity = $this->userTourPerformedRepository->findOneBy(
-            [
-                'user' => $user->getId(),
-                'tour' => $tour,
-            ]
-        );
+        $userTour = $this->userTourRepository->findOneByUserAndTour($user, $tourKeyname);
 
-        return null === $existingEntity;
+        return $userTour === null;
     }
 }

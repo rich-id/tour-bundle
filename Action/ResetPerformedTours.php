@@ -3,7 +3,7 @@
 namespace RichId\TourBundle\Action;
 
 use RichId\TourBundle\Exception\NotFoundTourException;
-use RichId\TourBundle\Repository\UserTourPerformedRepository;
+use RichId\TourBundle\Repository\UserTourRepository;
 use RichId\TourBundle\Rule\UserTourExists;
 
 /**
@@ -18,21 +18,21 @@ class ResetPerformedTours
     /** @var UserTourExists */
     private $userTourExists;
 
-    /** @var UserTourPerformedRepository */
-    private $userTourPerformedRepository;
+    /** @var UserTourRepository */
+    private $userTourRepository;
 
-    public function __construct(UserTourExists $userTourExists, UserTourPerformedRepository $userTourPerformedRepository)
+    public function __construct(UserTourExists $userTourExists, UserTourRepository $userTourRepository)
     {
         $this->userTourExists = $userTourExists;
-        $this->userTourPerformedRepository = $userTourPerformedRepository;
+        $this->userTourRepository = $userTourRepository;
     }
 
-    public function __invoke(string $tour): void
+    public function __invoke(string $tourKeyname): void
     {
-        if (!($this->userTourExists)($tour)) {
-            throw new NotFoundTourException($tour);
+        if (!($this->userTourExists)($tourKeyname)) {
+            throw new NotFoundTourException($tourKeyname);
         }
 
-        $this->userTourPerformedRepository->deleteByTour($tour);
+        $this->userTourRepository->deleteByTour($tourKeyname);
     }
 }

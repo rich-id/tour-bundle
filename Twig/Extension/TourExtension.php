@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Twig\Extension;
 
-use RichId\TourBundle\Repository\UserTourPerformedRepository;
+use RichId\TourBundle\Repository\UserTourRepository;
 use RichId\TourBundle\Rule\IsTourDisabled;
 use RichId\TourBundle\Rule\UserHasAccessToTour;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -18,8 +18,8 @@ use Twig\TwigFunction;
  */
 class TourExtension extends AbstractExtension
 {
-    /** @var UserTourPerformedRepository */
-    private $userTourPerformedRepository;
+    /** @var UserTourRepository */
+    private $userTourRepository;
 
     /** @var UserHasAccessToTour */
     private $userHasAccessToTour;
@@ -31,12 +31,12 @@ class TourExtension extends AbstractExtension
     private $userTours;
 
     public function __construct(
-        UserTourPerformedRepository $userTourPerformedRepository,
+        UserTourRepository $userTourRepository,
         UserHasAccessToTour $userHasAccessToTour,
         IsTourDisabled $isTourDisabled,
         ParameterBagInterface $parameterBag)
     {
-        $this->userTourPerformedRepository = $userTourPerformedRepository;
+        $this->userTourRepository = $userTourRepository;
         $this->userHasAccessToTour = $userHasAccessToTour;
         $this->isTourDisabled = $isTourDisabled;
         $this->userTours = $parameterBag->get('rich_id_tour.user_tours');
@@ -69,7 +69,7 @@ class TourExtension extends AbstractExtension
 
     public function getToursStatistics(): array
     {
-        return $this->userTourPerformedRepository->getStatistics();
+        return $this->userTourRepository->findStatistics();
     }
 }
 

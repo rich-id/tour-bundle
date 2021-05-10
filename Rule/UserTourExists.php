@@ -21,8 +21,8 @@ class UserTourExists
         $this->userTours = $parameterBag->get('rich_id_tour.user_tours');
     }
 
-    public function __invoke(string $tour): bool
+    public function __invoke(string $tourKeyname): bool
     {
-        return \in_array($tour, $this->userTours, true);
+        return \in_array($tourKeyname, $this->userTours, true);
     }
 }

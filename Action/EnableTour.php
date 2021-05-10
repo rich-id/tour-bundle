@@ -3,8 +3,9 @@
 namespace RichId\TourBundle\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
+use RichId\TourBundle\Entity\Tour;
 use RichId\TourBundle\Exception\NotFoundTourException;
-use RichId\TourBundle\Repository\TourDisabledRepository;
+use RichId\TourBundle\Repository\TourRepository;
 use RichId\TourBundle\Rule\UserTourExists;
 
 /**
@@ -22,31 +23,33 @@ class EnableTour
     /** @var UserTourExists */
     private $userTourExists;
 
-    /** @var TourDisabledRepository */
-    private $tourDisabledRepository;
+    /** @var TourRepository */
+    private $tourRepository;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         UserTourExists $userTourExists,
-        TourDisabledRepository $tourDisabledRepository
+        TourRepository $tourRepository
     ) {
         $this->entityManager = $entityManager;
         $this->userTourExists = $userTourExists;
-        $this->tourDisabledRepository = $tourDisabledRepository;
+        $this->tourRepository = $tourRepository;
     }
 
-    public function __invoke(string $tour): void
+    public function __invoke(string $tourKeyname): void
     {
-        if (!($this->userTourExists)($tour)) {
-            throw new NotFoundTourException($tour);
+        if (!($this->userTourExists)($tourKeyname)) {
+            throw new NotFoundTourException($tourKeyname);
         }
 
-        $existingEntity = $this->tourDisabledRepository->findOneByTour($tour);
+        $tour = $this->tourRepository->findOneByKeyname($tourKeyname);
 
-        if ($existingEntity === null) {
-            return;
+        if ($tour === null) {
+            $tour = Tour::build($tourKeyname);
         }
 
-        $this->entityManager->remove($existingEntity);
+        $tour->enable();
+
+        $this->entityManager->persist($tour);
     }
 }

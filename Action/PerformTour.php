@@ -3,12 +3,14 @@
 namespace RichId\TourBundle\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
+use RichId\TourBundle\Entity\Tour;
+use RichId\TourBundle\Entity\UserTour;
 use RichId\TourBundle\Exception\DisabledTourException;
 use RichId\TourBundle\Exception\NotAuthenticatedException;
 use RichId\TourBundle\Entity\UserTourInterface;
-use RichId\TourBundle\Entity\UserTourPerformed;
 use RichId\TourBundle\Exception\NotFoundTourException;
-use RichId\TourBundle\Repository\UserTourPerformedRepository;
+use RichId\TourBundle\Repository\TourRepository;
+use RichId\TourBundle\Repository\UserTourRepository;
 use RichId\TourBundle\Rule\IsTourDisabled;
 use RichId\TourBundle\Rule\UserTourExists;
 use Symfony\Component\Security\Core\Security;
@@ -34,31 +36,36 @@ class PerformTour
     /** @var IsTourDisabled */
     private $isTourDisabled;
 
-    /** @var UserTourPerformedRepository */
-    private $userTourPerformedRepository;
+    /** @var TourRepository */
+    private $tourRepository;
+
+    /** @var UserTourRepository */
+    private $userTourRepository;
 
     public function __construct(
         Security $security,
         EntityManagerInterface $entityManager,
         UserTourExists $userTourExists,
         IsTourDisabled $isTourDisabled,
-        UserTourPerformedRepository $userTourPerformedRepository
+        TourRepository $tourRepository,
+        UserTourRepository $userTourRepository
     ) {
         $this->security = $security;
         $this->entityManager = $entityManager;
         $this->userTourExists = $userTourExists;
         $this->isTourDisabled = $isTourDisabled;
-        $this->userTourPerformedRepository = $userTourPerformedRepository;
+        $this->tourRepository = $tourRepository;
+        $this->userTourRepository = $userTourRepository;
     }
 
-    public function __invoke(string $tour): void
+    public function __invoke(string $tourKeyname): void
     {
-        if (!($this->userTourExists)($tour)) {
-            throw new NotFoundTourException($tour);
+        if (!($this->userTourExists)($tourKeyname)) {
+            throw new NotFoundTourException($tourKeyname);
         }
 
-        if (($this->isTourDisabled)($tour)) {
-            throw new DisabledTourException($tour);
+        if (($this->isTourDisabled)($tourKeyname)) {
+            throw new DisabledTourException($tourKeyname);
         }
 
         $user = $this->security->getUser();
@@ -67,19 +74,20 @@ class PerformTour
             throw new NotAuthenticatedException();
         }
 
-        $existingEntity = $this->userTourPerformedRepository->findOneBy(
-            [
-                'user' => $user->getId(),
-                'tour' => $tour,
-            ]
-        );
+        $performedTour = $this->userTourRepository->findOneByUserAndTour($user, $tourKeyname);
 
-        if ($existingEntity !== null) {
+        if ($performedTour !== null) {
             return;
         }
 
-        $entity = UserTourPerformed::buildForUserAndTour($user, $tour);
+        $tour = $this->tourRepository->findOneByKeyname($tourKeyname);
 
-        $this->entityManager->persist($entity);
+        if ($tour === null) {
+            $tour = Tour::build($tourKeyname);
+            $this->entityManager->persist($tour);
+        }
+
+        $userTour = UserTour::buildForTourAndUser($tour, $user);
+        $this->entityManager->persist($userTour);
     }
 }
