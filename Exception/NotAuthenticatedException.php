@@ -9,7 +9,7 @@ namespace RichId\TourBundle\Exception;
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  */
-class NotAuthenticatedException extends \Exception
+class NotAuthenticatedException extends TourException
 {
     public function __construct()
     {

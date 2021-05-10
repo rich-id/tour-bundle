@@ -9,7 +9,7 @@ namespace RichId\TourBundle\Exception;
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  */
-class NotFoundTourException extends \Exception
+class NotFoundTourException extends TourException
 {
     public function __construct(string $tour)
     {
