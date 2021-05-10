@@ -7,8 +7,8 @@
     <services>
         <defaults autowire="true" autoconfigure="true" public="false"/>
 
-        <service id="RichId\TourBundle\Action\DisabledTour" />
-        <service id="RichId\TourBundle\Action\EnabledTour" />
+        <service id="RichId\TourBundle\Action\DisableTour" />
+        <service id="RichId\TourBundle\Action\EnableTour" />
         <service id="RichId\TourBundle\Action\PerformTour" />
         <service id="RichId\TourBundle\Action\ResetPerformedTours" />
 

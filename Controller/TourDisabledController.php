@@ -3,8 +3,8 @@
 namespace RichId\TourBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use RichId\TourBundle\Action\DisabledTour;
-use RichId\TourBundle\Action\EnabledTour;
+use RichId\TourBundle\Action\DisableTour;
+use RichId\TourBundle\Action\EnableTour;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class TourDisabledController extends AbstractController
 {
-    public function delete(Request $request, EnabledTour $enabledTour, EntityManagerInterface $entityManager): JsonResponse
+    public function delete(Request $request, EnableTour $enableTour, EntityManagerInterface $entityManager): JsonResponse
     {
         if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
             throw new AccessDeniedHttpException();
@@ -29,7 +29,7 @@ class TourDisabledController extends AbstractController
         $tour = $request->get('tour', '');
 
         try {
-            $enabledTour($tour);
+            $enableTour($tour);
             $entityManager->flush();
 
             return new JsonResponse();
@@ -38,7 +38,7 @@ class TourDisabledController extends AbstractController
         }
     }
 
-    public function post(Request $request, DisabledTour $disabledTour, EntityManagerInterface $entityManager): JsonResponse
+    public function post(Request $request, DisableTour $disableTour, EntityManagerInterface $entityManager): JsonResponse
     {
         if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
             throw new AccessDeniedHttpException();
@@ -47,7 +47,7 @@ class TourDisabledController extends AbstractController
         $tour = $request->get('tour', '');
 
         try {
-            $disabledTour($tour);
+            $disableTour($tour);
             $entityManager->flush();
 
             return new JsonResponse();

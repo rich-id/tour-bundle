@@ -3,18 +3,19 @@
 namespace RichId\TourBundle\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
+use RichId\TourBundle\Entity\TourDisabled;
 use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Repository\TourDisabledRepository;
 use RichId\TourBundle\Rule\UserTourExists;
 
 /**
- * Class EnabledTour
+ * Class DisableTour
  *
  * @package   RichId\TourBundle\Action
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  */
-class EnabledTour
+class DisableTour
 {
     /** @var EntityManagerInterface */
     private $entityManager;
@@ -43,10 +44,12 @@ class EnabledTour
 
         $existingEntity = $this->tourDisabledRepository->findOneByTour($tour);
 
-        if ($existingEntity === null) {
+        if ($existingEntity !== null) {
             return;
         }
 
-        $this->entityManager->remove($existingEntity);
+        $entity = TourDisabled::buildForTour($tour);
+
+        $this->entityManager->persist($entity);
     }
 }
