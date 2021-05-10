@@ -5,6 +5,8 @@ namespace RichId\TourBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use RichId\TourBundle\Action\DisableTour;
 use RichId\TourBundle\Action\EnableTour;
+use RichId\TourBundle\Action\PerformTour;
+use RichId\TourBundle\Action\ResetPerformedTours;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,15 +14,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
- * Class TourDisabledController.
+ * Class TourController.
  *
  * @package   RichId\TourBundle\Controller
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  */
-class TourDisabledController extends AbstractController
+class TourController extends AbstractController
 {
-    public function delete(Request $request, EnableTour $enableTour, EntityManagerInterface $entityManager): JsonResponse
+    public function enable(Request $request, EnableTour $enableTour, EntityManagerInterface $entityManager): JsonResponse
     {
         if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
             throw new AccessDeniedHttpException();
@@ -38,7 +40,7 @@ class TourDisabledController extends AbstractController
         }
     }
 
-    public function post(Request $request, DisableTour $disableTour, EntityManagerInterface $entityManager): JsonResponse
+    public function disable(Request $request, DisableTour $disableTour, EntityManagerInterface $entityManager): JsonResponse
     {
         if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
             throw new AccessDeniedHttpException();
@@ -49,6 +51,41 @@ class TourDisabledController extends AbstractController
         try {
             $disableTour($tour);
             $entityManager->flush();
+
+            return new JsonResponse();
+        } catch (\Throwable $throwable) {
+            return new JsonResponse($throwable->getMessage(), Response::HTTP_NOT_FOUND);
+        }
+    }
+
+    public function perform(Request $request, PerformTour $performTour, EntityManagerInterface $entityManager): JsonResponse
+    {
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $tour = $request->get('tour', '');
+
+        try {
+            $performTour($tour);
+            $entityManager->flush();
+
+            return new JsonResponse();
+        } catch (\Throwable $throwable) {
+            return new JsonResponse($throwable->getMessage(), Response::HTTP_NOT_FOUND);
+        }
+    }
+
+    public function resetPerformedTours(Request $request, ResetPerformedTours $resetPerformedTours): JsonResponse
+    {
+        if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $tour = $request->get('tour', '');
+
+        try {
+            $resetPerformedTours($tour);
 
             return new JsonResponse();
         } catch (\Throwable $throwable) {

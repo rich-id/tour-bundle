@@ -13,8 +13,7 @@
         <service id="RichId\TourBundle\Action\ResetPerformedTours" />
 
         <service id="RichId\TourBundle\Controller\AdministrationController" />
-        <service id="RichId\TourBundle\Controller\TourDisabledController" />
-        <service id="RichId\TourBundle\Controller\TourPerformController" />
+        <service id="RichId\TourBundle\Controller\TourController" />
 
         <service id="RichId\TourBundle\Repository\TourDisabledRepository" />
         <service id="RichId\TourBundle\Repository\UserTourPerformedRepository" />
