@@ -5,7 +5,6 @@ namespace RichId\TourBundle;
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use RichCongress\BundleToolbox\Configuration\AbstractBundle;
 use RichId\TourBundle\DependencyInjection\Compiler\DoctrineResolveTargetEntityPass;
-use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -17,24 +16,26 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class RichIdTourBundle extends AbstractBundle
 {
+    public const COMPILER_PASSES = [DoctrineResolveTargetEntityPass::class];
+
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
-        $this->addRegisterMappingsPass($container);
-
-        $container->addCompilerPass(new DoctrineResolveTargetEntityPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 1000);
+        $this->addDoctrineOrmMappingsPass($container);
     }
 
-    private function addRegisterMappingsPass(ContainerBuilder $container)
+    private function addDoctrineOrmMappingsPass(ContainerBuilder $container): void
     {
-        if (class_exists(DoctrineOrmMappingsPass::class)) {
-            $container->addCompilerPass(
-                DoctrineOrmMappingsPass::createAnnotationMappingDriver(
-                    ['RichId\TourBundle\Entity'],
-                    [__DIR__ . '/Entity']
-                )
-            );
+        if (!\class_exists(DoctrineOrmMappingsPass::class)) {
+            return;
         }
+
+        $container->addCompilerPass(
+            DoctrineOrmMappingsPass::createAnnotationMappingDriver(
+                ['RichId\TourBundle\Entity'],
+                [__DIR__ . '/Entity']
+            )
+        );
     }
 }

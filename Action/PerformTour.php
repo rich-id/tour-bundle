@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace RichId\TourBundle\UseCase;
+namespace RichId\TourBundle\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
 use RichId\TourBundle\Exception\DisabledTourException;
@@ -10,13 +10,13 @@ use RichId\TourBundle\Entity\UserTourPerformed;
 use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Repository\UserTourPerformedRepository;
 use RichId\TourBundle\Rule\IsTourDisabled;
-use RichId\TourBundle\Validator\UserTourExist;
+use RichId\TourBundle\Rule\UserTourExists;
 use Symfony\Component\Security\Core\Security;
 
 /**
  * Class PerformTour
  *
- * @package   RichId\TourBundle\UseCase
+ * @package   RichId\TourBundle\Action
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  */
@@ -28,8 +28,8 @@ class PerformTour
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    /** @var UserTourExist */
-    private $userTourExist;
+    /** @var UserTourExists */
+    private $userTourExists;
 
     /** @var IsTourDisabled */
     private $isTourDisabled;
@@ -40,20 +40,20 @@ class PerformTour
     public function __construct(
         Security $security,
         EntityManagerInterface $entityManager,
-        UserTourExist $userTourExist,
+        UserTourExists $userTourExists,
         IsTourDisabled $isTourDisabled,
         UserTourPerformedRepository $userTourPerformedRepository
     ) {
         $this->security = $security;
         $this->entityManager = $entityManager;
-        $this->userTourExist = $userTourExist;
+        $this->userTourExists = $userTourExists;
         $this->isTourDisabled = $isTourDisabled;
         $this->userTourPerformedRepository = $userTourPerformedRepository;
     }
 
     public function __invoke(string $tour): void
     {
-        if (!($this->userTourExist)($tour)) {
+        if (!($this->userTourExists)($tour)) {
             throw new NotFoundTourException($tour);
         }
 

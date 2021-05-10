@@ -1,55 +1,52 @@
 <?php declare(strict_types=1);
 
-namespace RichId\TourBundle\UseCase;
+namespace RichId\TourBundle\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
-use RichId\TourBundle\Entity\TourDisabled;
 use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Repository\TourDisabledRepository;
-use RichId\TourBundle\Validator\UserTourExist;
+use RichId\TourBundle\Rule\UserTourExists;
 
 /**
- * Class DisabledTour
+ * Class EnabledTour
  *
- * @package   RichId\TourBundle\UseCase
+ * @package   RichId\TourBundle\Action
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  */
-class DisabledTour
+class EnabledTour
 {
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    /** @var UserTourExist */
-    private $userTourExist;
+    /** @var UserTourExists */
+    private $userTourExists;
 
     /** @var TourDisabledRepository */
     private $tourDisabledRepository;
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        UserTourExist $userTourExist,
+        UserTourExists $userTourExists,
         TourDisabledRepository $tourDisabledRepository
     ) {
         $this->entityManager = $entityManager;
-        $this->userTourExist = $userTourExist;
+        $this->userTourExists = $userTourExists;
         $this->tourDisabledRepository = $tourDisabledRepository;
     }
 
     public function __invoke(string $tour): void
     {
-        if (!($this->userTourExist)($tour)) {
+        if (!($this->userTourExists)($tour)) {
             throw new NotFoundTourException($tour);
         }
 
         $existingEntity = $this->tourDisabledRepository->findOneByTour($tour);
 
-        if ($existingEntity !== null) {
+        if ($existingEntity === null) {
             return;
         }
 
-        $entity = TourDisabled::buildForTour($tour);
-
-        $this->entityManager->persist($entity);
+        $this->entityManager->remove($existingEntity);
     }
 }

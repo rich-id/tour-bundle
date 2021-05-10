@@ -3,8 +3,8 @@
 namespace RichId\TourBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use RichId\TourBundle\UseCase\DisabledTour;
-use RichId\TourBundle\UseCase\EnabledTour;
+use RichId\TourBundle\Action\DisabledTour;
+use RichId\TourBundle\Action\EnabledTour;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

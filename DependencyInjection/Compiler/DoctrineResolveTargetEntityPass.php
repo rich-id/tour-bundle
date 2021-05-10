@@ -2,14 +2,21 @@
 
 namespace RichId\TourBundle\DependencyInjection\Compiler;
 
+use RichCongress\BundleToolbox\Configuration\AbstractCompilerPass;
 use RichId\TourBundle\Entity\UserTourInterface;
-use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class DoctrineResolveTargetEntityPass implements CompilerPassInterface
+class DoctrineResolveTargetEntityPass extends AbstractCompilerPass
 {
+    public const PRIORITY = 1000;
+    public const MANDATORY_SERVICES = ['doctrine.orm.listeners.resolve_target_entity'];
+
     public function process(ContainerBuilder $container)
     {
+        if (!$this->checkMandatoryServices($container)) {
+            return;
+        }
+
         $definition = $container->findDefinition('doctrine.orm.listeners.resolve_target_entity');
 
         $definition->addMethodCall('addResolveTargetEntity', [

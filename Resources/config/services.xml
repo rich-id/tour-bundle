@@ -7,6 +7,11 @@
     <services>
         <defaults autowire="true" autoconfigure="true" public="false"/>
 
+        <service id="RichId\TourBundle\Action\DisabledTour" />
+        <service id="RichId\TourBundle\Action\EnabledTour" />
+        <service id="RichId\TourBundle\Action\PerformTour" />
+        <service id="RichId\TourBundle\Action\ResetPerformedTours" />
+
         <service id="RichId\TourBundle\Controller\AdministrationController" />
         <service id="RichId\TourBundle\Controller\TourDisabledController" />
         <service id="RichId\TourBundle\Controller\TourPerformController" />
@@ -16,15 +21,9 @@
 
         <service id="RichId\TourBundle\Rule\IsTourDisabled" />
         <service id="RichId\TourBundle\Rule\UserHasAccessToTour" />
+        <service id="RichId\TourBundle\Rule\UserTourExists" />
 
         <service id="RichId\TourBundle\Twig\Extension\TourExtension" />
-
-        <service id="RichId\TourBundle\UseCase\DisabledTour" />
-        <service id="RichId\TourBundle\UseCase\EnabledTour" />
-        <service id="RichId\TourBundle\UseCase\PerformTour" />
-        <service id="RichId\TourBundle\UseCase\ResetPerformedTours" />
-
-        <service id="RichId\TourBundle\Validator\UserTourExist" />
     </services>
 </container>
 

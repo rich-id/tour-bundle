@@ -1,35 +1,35 @@
 <?php declare(strict_types=1);
 
-namespace RichId\TourBundle\UseCase;
+namespace RichId\TourBundle\Action;
 
 use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Repository\UserTourPerformedRepository;
-use RichId\TourBundle\Validator\UserTourExist;
+use RichId\TourBundle\Rule\UserTourExists;
 
 /**
  * Class ResetPerformedTours
  *
- * @package   RichId\TourBundle\UseCase
+ * @package   RichId\TourBundle\Action
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  */
 class ResetPerformedTours
 {
-    /** @var UserTourExist */
-    private $userTourExist;
+    /** @var UserTourExists */
+    private $userTourExists;
 
     /** @var UserTourPerformedRepository */
     private $userTourPerformedRepository;
 
-    public function __construct(UserTourExist $userTourExist, UserTourPerformedRepository $userTourPerformedRepository)
+    public function __construct(UserTourExists $userTourExists, UserTourPerformedRepository $userTourPerformedRepository)
     {
-        $this->userTourExist = $userTourExist;
+        $this->userTourExists = $userTourExists;
         $this->userTourPerformedRepository = $userTourPerformedRepository;
     }
 
     public function __invoke(string $tour): void
     {
-        if (!($this->userTourExist)($tour)) {
+        if (!($this->userTourExists)($tour)) {
             throw new NotFoundTourException($tour);
         }
 

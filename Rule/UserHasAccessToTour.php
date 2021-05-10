@@ -4,7 +4,6 @@ namespace RichId\TourBundle\Rule;
 
 use RichId\TourBundle\Entity\UserTourInterface;
 use RichId\TourBundle\Repository\UserTourPerformedRepository;
-use RichId\TourBundle\Validator\UserTourExist;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -19,8 +18,8 @@ class UserHasAccessToTour
     /** @var Security */
     private $security;
 
-    /** @var UserTourExist */
-    private $userTourExist;
+    /** @var UserTourExists */
+    private $userTourExists;
 
     /** @var IsTourDisabled */
     private $isTourDisabled;
@@ -28,17 +27,17 @@ class UserHasAccessToTour
     /** @var UserTourPerformedRepository */
     private $userTourPerformedRepository;
 
-    public function __construct(Security $security, UserTourExist $userTourExist, IsTourDisabled $isTourDisabled, UserTourPerformedRepository $userTourPerformedRepository)
+    public function __construct(Security $security, UserTourExists $userTourExists, IsTourDisabled $isTourDisabled, UserTourPerformedRepository $userTourPerformedRepository)
     {
         $this->security = $security;
-        $this->userTourExist = $userTourExist;
+        $this->userTourExists = $userTourExists;
         $this->isTourDisabled = $isTourDisabled;
         $this->userTourPerformedRepository = $userTourPerformedRepository;
     }
 
     public function __invoke(string $tour): bool
     {
-        if (!($this->userTourExist)($tour) || ($this->isTourDisabled)($tour)) {
+        if (!($this->userTourExists)($tour) || ($this->isTourDisabled)($tour)) {
             return false;
         }
 

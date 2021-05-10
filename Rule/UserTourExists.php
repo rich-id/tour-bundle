@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace RichId\TourBundle\Validator;
+namespace RichId\TourBundle\Rule;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
- * Class UserTourExist
+ * Class UserTourExists
  *
- * @package   RichId\TourBundle\Validator
+ * @package   RichId\TourBundle\Rule
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  */
-class UserTourExist
+class UserTourExists
 {
     /** @var array|string[] */
     private $userTours;

@@ -1,0 +1,43 @@
+<script type="text/javascript">
+    window.getRichIdTourKey = function(tourId) {
+        return 'rich_id_tour_' + tourId;
+    };
+
+    // User
+    window.savedPerformedTourForCurrentUser = function(tourId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '{{ url('rich_id_tour_perform_tour') }}' + '?tour=' + tourId);
+        xhr.send();
+    };
+
+    // Cookie
+    window.hasPerformedTourInCookie = function(tourId) {
+        return document.cookie
+            .split(';')
+            .some(function (item) {
+                return item.trim().indexOf(getRichIdTourKey(tourId)) === 0;
+            });
+    };
+
+    window.savedPerformedTourInCookie = function(tourId, duration) {
+        if (typeof duration === 'undefined' || duration === null) {
+            duration = 180 * 24 * 60 * 60 * 1000;
+        }
+
+        var d = new Date();
+        d.setTime(d.getTime() + duration);
+        var expires = "expires=" + d.toUTCString();
+
+        document.cookie = getRichIdTourKey(tourId) + "=1;" + expires + ";path=/";
+    };
+
+    // LocalStorage
+    window.hasPerformedTourInLocalStorage = function(tourId) {
+        var founded = window.localStorage.getItem(getRichIdTourKey(tourId));
+        return typeof founded !== 'undefined' && founded !== null;
+    };
+
+    window.savedPerformedTourInLocalStorage = function(tourId) {
+        window.localStorage.setItem(getRichIdTourKey(tourId), '1');
+    };
+</script>

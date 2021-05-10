@@ -3,8 +3,8 @@
 namespace RichId\TourBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use RichId\TourBundle\UseCase\PerformTour;
-use RichId\TourBundle\UseCase\ResetPerformedTours;
+use RichId\TourBundle\Action\PerformTour;
+use RichId\TourBundle\Action\ResetPerformedTours;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
