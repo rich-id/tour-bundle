@@ -1,4 +1,4 @@
-![Test Image 1](.github/tour-bundle.svg)
+![Logo](.github/tour-bundle.svg)
 
 Getting Started With RichIdTourBundle
 =======================================
@@ -69,6 +69,8 @@ The bundle provides entities. You must therefore modify the structure of your da
 # 2. Getting started
 
 - [Configuration](Docs/Configuration.md)
+- [Helpers](Docs/Helpers.md)
+- [Administration](Docs/Administration.md)
 
 # 3. Versioning
 
