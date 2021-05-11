@@ -3,7 +3,6 @@
 namespace RichId\TourBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -16,17 +15,12 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class AdministrationController extends AbstractController
 {
-    public function tours(ParameterBagInterface $parameterBag): Response
+    public function tours(): Response
     {
         if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
             throw new AccessDeniedException();
         }
 
-        return $this->render(
-            '@RichIdTour/administration/tours.html.twig',
-            [
-                'tours' => $parameterBag->get('rich_id_tour.user_tours'),
-            ]
-        );
+        return $this->render('@RichIdTour/administration/tours.html.twig');
     }
 }
