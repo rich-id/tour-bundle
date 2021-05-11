@@ -20,7 +20,7 @@ class UserTour
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="RichId\TourBundle\Entity\Tour")
-     * @ORM\JoinColumn(name="tour_keyname", referencedColumnName="keyname", nullable=false)
+     * @ORM\JoinColumn(name="tour_keyname", referencedColumnName="keyname", nullable=false, onDelete="CASCADE")
      */
     protected $tour;
 
@@ -29,7 +29,7 @@ class UserTour
      *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="RichId\TourBundle\Entity\UserTourInterface")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     protected $user;
 
