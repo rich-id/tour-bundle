@@ -26,8 +26,7 @@ class UserTourRepository extends ServiceEntityRepository
         $qb = $this->_em->createQueryBuilder();
 
         $qb->delete(UserTour::class, 'ut')
-            ->join('ut.tour' , 't')
-            ->where('t.keyname = :keyname')
+            ->where('ut.tour = :keyname')
             ->setParameter('keyname', $tourKeyname)
             ->getQuery()
             ->execute();
