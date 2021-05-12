@@ -24,11 +24,10 @@ jobs:
             - name: Install the dependencies 🔧
               run: |
                   docker-compose exec -T application composer install --prefer-dist --no-interaction --no-progress
-                  docker-compose exec -T application php -d zend_extension=xdebug.so ./bin/phpunit --configuration phpunit.xml.dist --dump-xdebug-filter phpunit-filter.php
 
             - name: Execute the tests 🔧
               run: |
-                  docker-compose exec -T application php -d zend_extension=xdebug.so ./bin/phpunit --prepend phpunit-filter.php --configuration phpunit.xml.dist --colors=never --coverage-clover build/logs/clover.xml
+                  docker-compose exec -T application php -d extension=pcov.so ./bin/phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover build/logs/clover.xml
 
             - name: Upload results to Coveralls 🚀
               env:
