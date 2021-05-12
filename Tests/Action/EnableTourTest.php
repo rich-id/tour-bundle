@@ -4,23 +4,23 @@ namespace RichId\TourBundle\Tests\Action;
 
 use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
-use RichId\TourBundle\Action\DisableTour;
+use RichId\TourBundle\Action\EnableTour;
 use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Repository\TourRepository;
 
 /**
- * Class DisableTourTest
+ * Class EnableTourTest
  *
  * @package   RichId\TourBundle\Tests\Action
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
- * @covers \RichId\TourBundle\Action\DisableTour
+ * @covers \RichId\TourBundle\Action\EnableTour
  * @TestConfig("fixtures")
  */
-final class DisableTourTest extends TestCase
+final class EnableTourTest extends TestCase
 {
-    /** @var DisableTour */
+    /** @var EnableTour */
     public $action;
 
     /** @var TourRepository */
@@ -44,20 +44,20 @@ final class DisableTourTest extends TestCase
 
         $tour = $this->tourRepository->findOneByKeyname('database_tour_3');
         $this->assertNotNull($tour);
-        $this->assertTrue($tour->isDisabled());
+        $this->assertFalse($tour->isDisabled());
     }
 
     public function testActionTourAlreadyExistInDatabase(): void
     {
-        $tour = $this->tourRepository->findOneByKeyname('database_tour');
-        $this->assertNotNull($tour);
-        $this->assertFalse($tour->isDisabled());
-
-        ($this->action)('database_tour');
-        $this->getManager()->flush();
-
-        $tour = $this->tourRepository->findOneByKeyname('database_tour');
+        $tour = $this->tourRepository->findOneByKeyname('database_tour_2');
         $this->assertNotNull($tour);
         $this->assertTrue($tour->isDisabled());
+
+        ($this->action)('database_tour_2');
+        $this->getManager()->flush();
+
+        $tour = $this->tourRepository->findOneByKeyname('database_tour_2');
+        $this->assertNotNull($tour);
+        $this->assertFalse($tour->isDisabled());
     }
 }
