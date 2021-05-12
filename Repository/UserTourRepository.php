@@ -49,6 +49,16 @@ class UserTourRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function findPerformedTourKeynamesForUser(UserTourInterface $user): array
+    {
+        $qb = $this->createQueryBuilder('ut');
+
+        return $qb->where('ut.user = :user')
+            ->setParameter('user', $user->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findStatistics(): array
     {
         $qb = $this->createQueryBuilder('ut');

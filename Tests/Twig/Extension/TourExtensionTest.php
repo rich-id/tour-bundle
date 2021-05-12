@@ -27,32 +27,39 @@ final class TourExtensionTest extends TestCase
         $this->assertSame(
             [
                 'cookie_tour'        => [
-                    'storage'  => 'cookie',
-                    'duration' => '+6 months',
+                    'storage'    => 'cookie',
+                    'duration'   => '+6 months',
+                    'isDisabled' => false,
                 ],
                 'cookie_tour_2'      => [
-                    'storage'  => 'cookie',
-                    'duration' => '+1 months',
+                    'storage'    => 'cookie',
+                    'duration'   => '+1 months',
+                    'isDisabled' => false,
                 ],
                 'local_storage_tour' => [
-                    'storage'  => 'local_storage',
-                    'duration' => '+6 months',
+                    'storage'    => 'local_storage',
+                    'duration'   => '+6 months',
+                    'isDisabled' => false,
                 ],
                 'database_tour'      => [
-                    'storage'  => 'database',
-                    'duration' => '+6 months',
+                    'storage'    => 'database',
+                    'duration'   => '+6 months',
+                    'isDisabled' => false,
                 ],
                 'database_tour_2'    => [
-                    'storage'  => 'database',
-                    'duration' => '+6 months',
+                    'storage'    => 'database',
+                    'duration'   => '+6 months',
+                    'isDisabled' => true,
                 ],
                 'database_tour_3'    => [
-                    'storage'  => 'database',
-                    'duration' => '+6 months',
+                    'storage'    => 'database',
+                    'duration'   => '+6 months',
+                    'isDisabled' => false,
                 ],
                 'database_tour_4'    => [
-                    'storage'  => 'database',
-                    'duration' => '+6 months',
+                    'storage'    => 'database',
+                    'duration'   => '+6 months',
+                    'isDisabled' => false,
                 ],
 
             ],

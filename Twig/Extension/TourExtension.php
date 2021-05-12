@@ -2,10 +2,13 @@
 
 namespace RichId\TourBundle\Twig\Extension;
 
+use RichId\TourBundle\Entity\UserTourInterface;
+use RichId\TourBundle\Repository\TourRepository;
 use RichId\TourBundle\Repository\UserTourRepository;
 use RichId\TourBundle\Rule\IsTourDisabled;
 use RichId\TourBundle\Rule\UserHasAccessToTour;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Security\Core\Security;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -18,6 +21,12 @@ use Twig\TwigFunction;
  */
 class TourExtension extends AbstractExtension
 {
+    /** @var Security */
+    private $security;
+
+    /** @var TourRepository */
+    private $tourRepository;
+
     /** @var UserTourRepository */
     private $userTourRepository;
 
@@ -31,11 +40,15 @@ class TourExtension extends AbstractExtension
     private $tours;
 
     public function __construct(
+        Security $security,
+        TourRepository $tourRepository,
         UserTourRepository $userTourRepository,
         UserHasAccessToTour $userHasAccessToTour,
         IsTourDisabled $isTourDisabled,
         ParameterBagInterface $parameterBag)
     {
+        $this->security = $security;
+        $this->tourRepository = $tourRepository;
         $this->userTourRepository = $userTourRepository;
         $this->userHasAccessToTour = $userHasAccessToTour;
         $this->isTourDisabled = $isTourDisabled;
@@ -46,6 +59,7 @@ class TourExtension extends AbstractExtension
     {
         return [
             new TwigFunction('getTours', [$this, 'getTours']),
+            new TwigFunction('getPerformedToursForCurrentUser', [$this, 'getPerformedToursForCurrentUser']),
             new TwigFunction('hasAccessToTour', [$this, 'hasAccessToTour']),
             new TwigFunction('isTourDisabled', [$this, 'isTourDisabled']),
             new TwigFunction('getToursStatistics', [$this, 'getToursStatistics']),
@@ -54,7 +68,26 @@ class TourExtension extends AbstractExtension
 
     public function getTours(): array
     {
-        return $this->tours;
+        $disabledTours = $this->tourRepository->findDisabledTourKeynames();
+        $tours = [];
+
+        foreach ($this->tours as $tourName => $tour) {
+            $tours[$tourName] = $tour;
+            $tours[$tourName]['isDisabled'] = \in_array($tourName, $disabledTours, true);
+        }
+
+        return $tours;
+    }
+
+    public function getPerformedToursForCurrentUser(): array
+    {
+        $user = $this->security->getUser();
+
+        if (!$user instanceof UserTourInterface) {
+            return [];
+        }
+
+        return $this->userTourRepository->findPerformedTourKeynamesForUser($user);
     }
 
     public function hasAccessToTour(string $tour): bool

@@ -21,4 +21,16 @@ class TourRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tour::class);
     }
+
+    public function findDisabledTourKeynames(): array
+    {
+        $qb = $this->createQueryBuilder('t');
+
+        $results = $qb->select('t.keyname')
+            ->where('t.isDisabled = 1')
+            ->getQuery()
+            ->getResult();
+
+        return \array_column($results, 'keyname');
+    }
 }

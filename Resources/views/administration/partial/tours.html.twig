@@ -61,7 +61,7 @@
     };
 
     {% for tourName,tour in tours %}
-        {% if not isTourDisabled(tourName) %}
+        {% if not tour.isDisabled%}
             document.getElementById('{{ 'form_' ~ tourName }}').checked = true;
         {% endif %}
     {% endfor %}
