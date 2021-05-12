@@ -9,3 +9,5 @@ services:
 
     RichId\TourBundle\Builder\SpreadsheetBuilder:
         public: true
+
+    RichId\TourBundle\Tests\Resources\Fixtures\TourFixtures: ~

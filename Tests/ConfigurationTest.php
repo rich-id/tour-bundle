@@ -43,6 +43,10 @@ final class ConfigurationTest extends TestCase
                         'storage' => 'database',
                         'duration' => '+6 months',
                     ],
+                    'database_tour_2'    => [
+                        'storage' => 'database',
+                        'duration' => '+6 months',
+                    ],
                 ],
             ],
             $parameterBag->get('rich_id_tour')
