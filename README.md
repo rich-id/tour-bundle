@@ -20,17 +20,24 @@ Declare the tours in Symfony's configuration:
 
 ```yaml
 rich_id_tour:
-   user_class: App\Entity\User
-   tours:
-      - tour-1
-      - additionnal-tour
-      - another-one
+    user_class: App\Entity\User
+    tours:
+        tour-1:
+            storage: cookie
+            duration: '+9 months'
+        additionnal-tour:
+            storage: local_storage
+        another-one:
+            storage: database
 ```
 
 Now that you declared the tours, you can now use the Javascript functions to whether execute a tour or not:
 
 ```javascript
-if ()
+if (!isTourAlreadyPerformed('tour-1')) {
+    // Make the tour
+   markTourAsPerformed('tour-1');
+}
 ```
 
 
