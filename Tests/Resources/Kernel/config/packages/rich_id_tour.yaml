@@ -14,3 +14,5 @@ rich_id_tour:
             storage: database
         database_tour_3:
             storage: database
+        database_tour_4:
+            storage: database

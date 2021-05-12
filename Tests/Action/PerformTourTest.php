@@ -10,6 +10,7 @@ use RichId\TourBundle\Exception\NotAuthenticatedException;
 use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Exception\UnsupportedActionStorageException;
 use RichId\TourBundle\Repository\TourRepository;
+use RichId\TourBundle\Repository\UserTourRepository;
 use RichId\TourBundle\Tests\Resources\Entity\DummyUser;
 
 /**
@@ -29,6 +30,9 @@ final class PerformTourTest extends TestCase
 
     /** @var TourRepository */
     public $tourRepository;
+
+    /** @var UserTourRepository */
+    public $userTourRepository;
 
     public function testActionNotExistingTour(): void
     {
@@ -72,15 +76,58 @@ final class PerformTourTest extends TestCase
 
     public function testActionTourNotExistInDatabase(): void
     {
-        $this->authenticate(DummyUser::class, '1');
+        $user = $this->getRepository(DummyUser::class)->find(1);
+        $this->authenticateUser($user);
 
         $tour = $this->tourRepository->findOneByKeyname('database_tour_3');
+        $userTour = $this->userTourRepository->findOneByUserAndTour($user, 'database_tour_3');
         $this->assertNull($tour);
+        $this->assertNull($userTour);
 
         ($this->action)('database_tour_3');
         $this->getManager()->flush();
 
         $tour = $this->tourRepository->findOneByKeyname('database_tour_3');
+        $userTour = $this->userTourRepository->findOneByUserAndTour($user, 'database_tour_3');
         $this->assertNotNull($tour);
+        $this->assertNotNull($userTour);
+    }
+
+    public function testActionTourAlreadyExistInDatabase(): void
+    {
+        $user = $this->getRepository(DummyUser::class)->find(1);
+        $this->authenticateUser($user);
+
+        $tour = $this->tourRepository->findOneByKeyname('database_tour');
+        $userTour = $this->userTourRepository->findOneByUserAndTour($user, 'database_tour');
+        $this->assertNotNull($tour);
+        $this->assertNull($userTour);
+
+        ($this->action)('database_tour');
+        $this->getManager()->flush();
+
+        $tour = $this->tourRepository->findOneByKeyname('database_tour');
+        $userTour = $this->userTourRepository->findOneByUserAndTour($user, 'database_tour');
+        $this->assertNotNull($tour);
+        $this->assertNotNull($userTour);
+    }
+
+    public function testActionTourAlreadyPerformed(): void
+    {
+        $user = $this->getRepository(DummyUser::class)->find(1);
+        $this->authenticateUser($user);
+
+        $tour = $this->tourRepository->findOneByKeyname('database_tour_4');
+        $userTour = $this->userTourRepository->findOneByUserAndTour($user, 'database_tour_4');
+        $this->assertNotNull($tour);
+        $this->assertNotNull($userTour);
+
+        ($this->action)('database_tour_4');
+        $this->getManager()->flush();
+
+        $tour = $this->tourRepository->findOneByKeyname('database_tour_4');
+        $userTour = $this->userTourRepository->findOneByUserAndTour($user, 'database_tour_4');
+        $this->assertNotNull($tour);
+        $this->assertNotNull($userTour);
     }
 }

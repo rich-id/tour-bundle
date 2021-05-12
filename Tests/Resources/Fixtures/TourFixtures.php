@@ -33,5 +33,14 @@ final class TourFixtures extends AbstractFixture
                 'isDisabled' => true,
             ]
         );
+
+        $this->createObject(
+            Tour::class,
+            'database_tour_4',
+            [
+                'keyname'    => 'database_tour_4',
+                'isDisabled' => false,
+            ]
+        );
     }
 }
