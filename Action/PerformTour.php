@@ -9,10 +9,12 @@ use RichId\TourBundle\Exception\DisabledTourException;
 use RichId\TourBundle\Exception\NotAuthenticatedException;
 use RichId\TourBundle\Entity\UserTourInterface;
 use RichId\TourBundle\Exception\NotFoundTourException;
+use RichId\TourBundle\Exception\UnsupportedActionStorageException;
 use RichId\TourBundle\Repository\TourRepository;
 use RichId\TourBundle\Repository\UserTourRepository;
 use RichId\TourBundle\Rule\IsTourDisabled;
-use RichId\TourBundle\Rule\UserTourExists;
+use RichId\TourBundle\Rule\TourExists;
+use RichId\TourBundle\Rule\TourHasDatabaseStorage;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -30,8 +32,11 @@ class PerformTour
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    /** @var UserTourExists */
-    private $userTourExists;
+    /** @var TourExists */
+    private $tourExists;
+
+    /** @var TourHasDatabaseStorage */
+    private $tourHasDatabaseStorage;
 
     /** @var IsTourDisabled */
     private $isTourDisabled;
@@ -45,14 +50,16 @@ class PerformTour
     public function __construct(
         Security $security,
         EntityManagerInterface $entityManager,
-        UserTourExists $userTourExists,
+        TourExists $tourExists,
+        TourHasDatabaseStorage $tourHasDatabaseStorage,
         IsTourDisabled $isTourDisabled,
         TourRepository $tourRepository,
         UserTourRepository $userTourRepository
     ) {
         $this->security = $security;
         $this->entityManager = $entityManager;
-        $this->userTourExists = $userTourExists;
+        $this->tourExists = $tourExists;
+        $this->tourHasDatabaseStorage = $tourHasDatabaseStorage;
         $this->isTourDisabled = $isTourDisabled;
         $this->tourRepository = $tourRepository;
         $this->userTourRepository = $userTourRepository;
@@ -60,8 +67,12 @@ class PerformTour
 
     public function __invoke(string $tourKeyname): void
     {
-        if (!($this->userTourExists)($tourKeyname)) {
+        if (!($this->tourExists)($tourKeyname)) {
             throw new NotFoundTourException($tourKeyname);
+        }
+
+        if (!($this->tourHasDatabaseStorage)($tourKeyname)) {
+            throw new UnsupportedActionStorageException($tourKeyname);
         }
 
         if (($this->isTourDisabled)($tourKeyname)) {

@@ -19,8 +19,9 @@
         <service id="RichId\TourBundle\Repository\UserTourRepository" />
 
         <service id="RichId\TourBundle\Rule\IsTourDisabled" />
+        <service id="RichId\TourBundle\Rule\TourExists" />
+        <service id="RichId\TourBundle\Rule\TourHasDatabaseStorage" />
         <service id="RichId\TourBundle\Rule\UserHasAccessToTour" />
-        <service id="RichId\TourBundle\Rule\UserTourExists" />
 
         <service id="RichId\TourBundle\Twig\Extension\TourExtension" />
     </services>

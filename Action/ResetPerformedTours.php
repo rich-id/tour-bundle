@@ -3,8 +3,10 @@
 namespace RichId\TourBundle\Action;
 
 use RichId\TourBundle\Exception\NotFoundTourException;
+use RichId\TourBundle\Exception\UnsupportedActionStorageException;
 use RichId\TourBundle\Repository\UserTourRepository;
-use RichId\TourBundle\Rule\UserTourExists;
+use RichId\TourBundle\Rule\TourExists;
+use RichId\TourBundle\Rule\TourHasDatabaseStorage;
 
 /**
  * Class ResetPerformedTours
@@ -15,22 +17,30 @@ use RichId\TourBundle\Rule\UserTourExists;
  */
 class ResetPerformedTours
 {
-    /** @var UserTourExists */
-    private $userTourExists;
+    /** @var TourExists */
+    private $tourExists;
+
+    /** @var TourHasDatabaseStorage */
+    private $tourHasDatabaseStorage;
 
     /** @var UserTourRepository */
     private $userTourRepository;
 
-    public function __construct(UserTourExists $userTourExists, UserTourRepository $userTourRepository)
+    public function __construct(TourExists $tourExists, TourHasDatabaseStorage $tourHasDatabaseStorage, UserTourRepository $userTourRepository)
     {
-        $this->userTourExists = $userTourExists;
+        $this->tourExists = $tourExists;
+        $this->tourHasDatabaseStorage = $tourHasDatabaseStorage;
         $this->userTourRepository = $userTourRepository;
     }
 
     public function __invoke(string $tourKeyname): void
     {
-        if (!($this->userTourExists)($tourKeyname)) {
+        if (!($this->tourExists)($tourKeyname)) {
             throw new NotFoundTourException($tourKeyname);
+        }
+
+        if (!($this->tourHasDatabaseStorage)($tourKeyname)) {
+            throw new UnsupportedActionStorageException($tourKeyname);
         }
 
         $this->userTourRepository->deleteByTour($tourKeyname);

@@ -1,4 +1,4 @@
-{% set tours = getAllowedTours() %}
+{% set tours = getTours() %}
 
 <style>
     {% include 'RichIdTourBundle::style.css.twig' %}
@@ -13,22 +13,24 @@
     </div>
     {% set statistics = getToursStatistics() %}
 
-    {% for tour in tours|sort %}
+    {% for tourName,tour in tours %}
         <div class="rich-id-tour-actions">
-            <div class="rich-id-tour-name">{{ tour }}</div>
+            <div class="rich-id-tour-name">{{ tourName }} ({{ tour.storage }})</div>
 
             <div class="rich-id-tour-toggle">
-                <input id="form_{{ tour }}" name="form[{{ tour }}]" type="checkbox" onclick="richIdTourActivationChange('{{ tour }}');">
-                <label for="form_{{ tour }}">{{ 'rich_id_tour.administration.is_enabled'|trans({}, 'tour') }}</label>
+                <input id="form_{{ tourName }}" name="form[{{ tourName }}]" type="checkbox" onclick="richIdTourActivationChange('{{ tourName }}');">
+                <label for="form_{{ tourName }}">{{ 'rich_id_tour.administration.is_enabled'|trans({}, 'tour') }}</label>
             </div>
 
-            <button class="rich-id-tour-button" onclick="richIdTourReset('{{ tour }}');">
-                {{ 'rich_id_tour.administration.force_tour_reset'|trans({}, 'tour') }}
-            </button>
+            {% if tour.storage == 'database' %}
+                <button class="rich-id-tour-button" onclick="richIdTourReset('{{ tourName }}');">
+                    {{ 'rich_id_tour.administration.force_tour_reset'|trans({}, 'tour') }}
+                </button>
 
-            <div class="statistics">
-                {{ 'rich_id_tour.administration.performed_number'|trans({'%count%': statistics[tour]|default(0)}, 'tour') }}
-            </div>
+                <div class="statistics">
+                    {{ 'rich_id_tour.administration.performed_number'|trans({'%count%': statistics[tourName]|default(0)}, 'tour') }}
+                </div>
+            {% endif %}
         </div>
     {% endfor %}
 
@@ -58,9 +60,9 @@
         });
     };
 
-    {% for tour in tours %}
-        {% if not isTourDisabled(tour) %}
-            document.getElementById('{{ 'form_' ~ tour }}').checked = true;
+    {% for tourName,tour in tours %}
+        {% if not isTourDisabled(tourName) %}
+            document.getElementById('{{ 'form_' ~ tourName }}').checked = true;
         {% endif %}
     {% endfor %}
 

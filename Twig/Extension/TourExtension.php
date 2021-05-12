@@ -27,8 +27,8 @@ class TourExtension extends AbstractExtension
     /** @var IsTourDisabled */
     private $isTourDisabled;
 
-    /** @var array|string[] */
-    private $userTours;
+    /** @var array*/
+    private $tours;
 
     public function __construct(
         UserTourRepository $userTourRepository,
@@ -39,22 +39,22 @@ class TourExtension extends AbstractExtension
         $this->userTourRepository = $userTourRepository;
         $this->userHasAccessToTour = $userHasAccessToTour;
         $this->isTourDisabled = $isTourDisabled;
-        $this->userTours = $parameterBag->get('rich_id_tour.tours');
+        $this->tours = $parameterBag->get('rich_id_tour.tours');
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('getAllowedTours', [$this, 'getAllowedTours']),
+            new TwigFunction('getTours', [$this, 'getTours']),
             new TwigFunction('hasAccessToTour', [$this, 'hasAccessToTour']),
             new TwigFunction('isTourDisabled', [$this, 'isTourDisabled']),
             new TwigFunction('getToursStatistics', [$this, 'getToursStatistics']),
         ];
     }
 
-    public function getAllowedTours(): array
+    public function getTours(): array
     {
-        return $this->userTours;
+        return $this->tours;
     }
 
     public function hasAccessToTour(string $tour): bool

@@ -5,24 +5,28 @@ namespace RichId\TourBundle\Rule;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
- * Class UserTourExists
+ * Class TourHasDatabaseStorage
  *
  * @package   RichId\TourBundle\Rule
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  */
-class UserTourExists
+class TourHasDatabaseStorage
 {
     /** @var array|string[] */
-    private $userTours;
+    private $tours;
 
     public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->userTours = $parameterBag->get('rich_id_tour.tours');
+        $this->tours = $parameterBag->get('rich_id_tour.tours');
     }
 
     public function __invoke(string $tourKeyname): bool
     {
-        return \in_array($tourKeyname, $this->userTours, true);
+        if (!isset($this->tours[$tourKeyname])) {
+            return false;
+        }
+
+        return $this->tours[$tourKeyname]['storage'] === 'database';
     }
 }

@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use RichId\TourBundle\Entity\Tour;
 use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Repository\TourRepository;
-use RichId\TourBundle\Rule\UserTourExists;
+use RichId\TourBundle\Rule\TourExists;
 
 /**
  * Class EnableTour
@@ -20,25 +20,25 @@ class EnableTour
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    /** @var UserTourExists */
-    private $userTourExists;
+    /** @var TourExists */
+    private $tourExists;
 
     /** @var TourRepository */
     private $tourRepository;
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        UserTourExists $userTourExists,
+        TourExists $tourExists,
         TourRepository $tourRepository
     ) {
         $this->entityManager = $entityManager;
-        $this->userTourExists = $userTourExists;
+        $this->tourExists = $tourExists;
         $this->tourRepository = $tourRepository;
     }
 
     public function __invoke(string $tourKeyname): void
     {
-        if (!($this->userTourExists)($tourKeyname)) {
+        if (!($this->tourExists)($tourKeyname)) {
             throw new NotFoundTourException($tourKeyname);
         }
 
