@@ -13,7 +13,7 @@ use RichId\TourBundle\Exception\TourException;
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
- * @covers \RichId\TourBundle\Exception\NotFoundTourException
+ * @covers \RichId\TourBundle\Exception\UnsupportedActionStorageException
  */
 final class UnsupportedActionStorageExceptionTest extends TestCase
 {
