@@ -4,6 +4,8 @@ services:
         autowire: true
         public: true
 
+    RichId\TourBundle\Twig\Extension\TourExtension: ~
+
     RichId\TourBundle\Tests\Resources\Fixtures\DummyUserFixtures: ~
     RichId\TourBundle\Tests\Resources\Fixtures\TourFixtures: ~
     RichId\TourBundle\Tests\Resources\Fixtures\UserTourFixtures: ~

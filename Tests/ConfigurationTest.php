@@ -23,7 +23,7 @@ final class ConfigurationTest extends TestCase
     {
         $parameterBag = $this->getService(ParameterBagInterface::class);
 
-        self::assertSame(
+        $this->assertSame(
             [
                 'user_class' => DummyUser::class,
                 'tours'      => [
