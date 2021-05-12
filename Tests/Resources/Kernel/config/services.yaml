@@ -4,10 +4,5 @@ services:
         autowire: true
         public: true
 
-    RichId\TourBundle\Generator\ExcelGenerator:
-        public: true
-
-    RichId\TourBundle\Builder\SpreadsheetBuilder:
-        public: true
-
+    RichId\TourBundle\Tests\Resources\Fixtures\DummyUserFixtures: ~
     RichId\TourBundle\Tests\Resources\Fixtures\TourFixtures: ~

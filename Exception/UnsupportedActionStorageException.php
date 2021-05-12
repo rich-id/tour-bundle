@@ -13,6 +13,6 @@ class UnsupportedActionStorageException extends TourException
 {
     public function __construct(string $tour)
     {
-        parent::__construct(\sprintf('The storage of the %s vitoursit must be of database type.', $tour));
+        parent::__construct(\sprintf('The storage of the %s tour must be of database type', $tour));
     }
 }
