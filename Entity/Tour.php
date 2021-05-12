@@ -30,6 +30,16 @@ class Tour
      */
     private $isDisabled = false;
 
+    public function getKeyname(): string
+    {
+        return $this->keyname;
+    }
+
+    public function isDisabled(): bool
+    {
+        return $this->isDisabled;
+    }
+
     public function disable(): self
     {
         $this->isDisabled = true;
@@ -42,11 +52,6 @@ class Tour
         $this->isDisabled = false;
 
         return $this;
-    }
-
-    public function isDisabled(): bool
-    {
-        return $this->isDisabled;
     }
 
     public static function build(string $keyname): self

@@ -7,7 +7,6 @@ use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Action\ResetPerformedTours;
 use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Exception\UnsupportedActionStorageException;
-use RichId\TourBundle\Repository\TourRepository;
 use RichId\TourBundle\Repository\UserTourRepository;
 
 /**

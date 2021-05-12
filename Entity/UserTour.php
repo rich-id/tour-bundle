@@ -33,6 +33,16 @@ class UserTour
      */
     protected $user;
 
+    public function getTour(): Tour
+    {
+        return $this->tour;
+    }
+
+    public function getUser(): UserTourInterface
+    {
+        return $this->user;
+    }
+
     public static function buildForTourAndUser(Tour $tour, UserTourInterface $user): self
     {
         $entity = new self();
