@@ -4,6 +4,7 @@ namespace RichId\TourBundle\Tests\Twig\Extension;
 
 use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
+use RichId\TourBundle\Tests\Resources\Entity\DummyUser;
 use RichId\TourBundle\Twig\Extension\TourExtension;
 
 /**
@@ -67,6 +68,40 @@ final class TourExtensionTest extends TestCase
     public function testIsTourNotDisabled(): void
     {
         $this->assertFalse($this->extension->isTourDisabled('database_tour'));
+    }
+
+    public function testHasAccessToTourNotExist(): void
+    {
+        $this->assertFalse($this->extension->hasAccessToTour('other_database_tour'));
+    }
+
+    public function testHasAccessToTourNotAuthenticated(): void
+    {
+        $this->assertFalse($this->extension->hasAccessToTour('database_tour'));
+    }
+
+    public function testHasAccessToTourDIsabled(): void
+    {
+        $user = $this->getRepository(DummyUser::class)->find(1);
+        $this->authenticateUser($user);
+
+        $this->assertFalse($this->extension->hasAccessToTour('database_tour_2'));
+    }
+
+    public function testHasAccessToTour(): void
+    {
+        $user = $this->getRepository(DummyUser::class)->find(1);
+        $this->authenticateUser($user);
+
+        $this->assertTrue($this->extension->hasAccessToTour('database_tour'));
+    }
+
+    public function testHasAccessToTourAlreadyPerformed(): void
+    {
+        $user = $this->getRepository(DummyUser::class)->find(1);
+        $this->authenticateUser($user);
+
+        $this->assertFalse($this->extension->hasAccessToTour('database_tour_4'));
     }
 
     public function testGetToursStatistics(): void
