@@ -1,0 +1,18 @@
+doctrine:
+    dbal:
+        driver: pdo_sqlite
+        user: test
+        path: '%kernel.cache_dir%/__DBNAME__.db'
+        url: null
+        memory: true
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: false
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/Tests/Resources/Entity'
+                prefix: 'RichId\TourBundle\Tests\Resources\Entity'
+                alias: App

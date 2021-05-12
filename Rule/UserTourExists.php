@@ -18,7 +18,7 @@ class UserTourExists
 
     public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->userTours = $parameterBag->get('rich_id_tour.user_tours');
+        $this->userTours = $parameterBag->get('rich_id_tour.tours');
     }
 
     public function __invoke(string $tourKeyname): bool

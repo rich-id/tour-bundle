@@ -25,6 +25,7 @@
         "symfony/twig-bundle": "^4.4"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "richcongress/test-suite": "^0.1",
         "infection/infection": "^0.16.4"
     },

@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: true
+
+    RichId\TourBundle\Generator\ExcelGenerator:
+        public: true
+
+    RichId\TourBundle\Builder\SpreadsheetBuilder:
+        public: true

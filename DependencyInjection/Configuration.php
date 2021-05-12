@@ -20,7 +20,7 @@ class Configuration extends AbstractConfiguration
         $children = $rootNode->children();
 
         $this->buildUserClassNode($children);
-        $this->buildUserToursNode($children);
+        $this->buildToursNode($children);
 
         $children->end();
     }
@@ -33,13 +33,18 @@ class Configuration extends AbstractConfiguration
             ->end();
     }
 
-    protected function buildUserToursNode(NodeBuilder $nodeBuilder): NodeBuilder
+    protected function buildToursNode(NodeBuilder $nodeBuilder): NodeBuilder
     {
         return $nodeBuilder
-            ->arrayNode('user_tours')
-            ->normalizeKeys(false)
+            ->arrayNode('tours')
+            ->normalizeKeys(true)
             ->defaultValue([])
-            ->scalarPrototype()->end()
+                ->arrayPrototype()
+                    ->children()
+                        ->enumNode('storage')->values(['database', 'cookie', 'local_storage'])->end()
+                        ->scalarNode('duration')->defaultValue('+6 months')->end()
+                    ->end()
+                ->end()
             ->end();
     }
 }

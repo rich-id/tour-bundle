@@ -1,21 +1,21 @@
 # Administration
 
-By default, a route `/administration/tours` is accessible in order to set up the tours
-
-Here is the rendering of this page:
+By default, a route `/administration/tours` is available to the tours administrator to configure them.
 
 ![](../.github/administration.png)
+
+In this page:
 
 - All tours are listed in alphabetical order.
 - By default, a tour is active.
 - You can disable/enable tour (1).
-- You can force the re-display of a visit to all users even if they have already seen it (2).
+- You can reset the tour viewers to make it appear for all users again.
 - A counter of the number of times each Tour is available (3).
+
 
 ### Customization
 
-To customize the style, it is possible to extend the default template`templates/bundles/RichIdTourBundle/administration/tours.html.twig`
-
+To customize the style, it is possible to extend the default template `templates/bundles/RichIdTourBundle/administration/tours.html.twig`
 
 ```html
 {% extends "RichIdTourBundle:administration:tours.html.twig" %}
@@ -39,5 +39,4 @@ To customize the style, it is possible to extend the default template`templates/
     }
 </style>
 {% endblock %}
-
 ```

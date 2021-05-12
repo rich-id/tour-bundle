@@ -39,7 +39,7 @@ class TourExtension extends AbstractExtension
         $this->userTourRepository = $userTourRepository;
         $this->userHasAccessToTour = $userHasAccessToTour;
         $this->isTourDisabled = $isTourDisabled;
-        $this->userTours = $parameterBag->get('rich_id_tour.user_tours');
+        $this->userTours = $parameterBag->get('rich_id_tour.tours');
     }
 
     public function getFunctions(): array

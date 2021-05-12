@@ -1,21 +1,27 @@
 # Configuration
 
-The configuration can be edited from the `rich_id_tour.yaml` file. Here is a sample of configuration:
+The configuration is available from the `rich_id_tour.yaml` file. Here is a sample of configuration:
 
 ```yaml
 rich_id_tour:
     user_class: App\Entity\DummyUser
-    user_tours:
-        - my_first_tour
+    tours:
+        my_first_tour:
+            storage: cookie
+            duration: '+6 months'
+        my_second_tour:
+            storage: local_storage
+        my_third_tour:
+            storage: database
 ```
 
-The following list gives more precisions about the configuration:
+The following table describes all entries.
 
-- `user_class`
+| Key                     | Required | Type                            | Description                                                                                             |
+| ---                     | ---      | ---                             | ---                                                                                                     |
+| `user_class`            | x        | string                          | The user class must implement the `UserTourInterface`                                                   |
+| `tours`                 |          | object[]                        | The list of available tours                                                                             |
+| `tours.<name>`          |          | string                          | Name of the tour                                                                                        |
+| `tours.<name>.storage`  |  x       | `cookie|local_storage|database` | The method used to store if the user saw the tour                                                       |
+| `tours.<name>.duration` |          | string                          | Used only for the cookie storage. Sets the lifetime of the cookie. Must be a PHP DateTime valid string. |
 
-Your User class that muist be implements UserTourInterface
-
-
-- `user_tours`
-
-This is a list of available tours that you define
