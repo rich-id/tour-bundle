@@ -1,0 +1,2 @@
+rich_id_tour:
+    resource: "@RichIdTourBundle/Resources/config/routing/routing.xml"

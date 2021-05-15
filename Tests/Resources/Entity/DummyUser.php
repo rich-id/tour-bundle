@@ -46,7 +46,7 @@ class DummyUser implements UserInterface, UserTourInterface
 
     public function getRoles(): array
     {
-        return [];
+        return ['ROLE_RICH_ID_TOUR_ADMIN'];
     }
 
     public function getPassword(): string
@@ -61,5 +61,10 @@ class DummyUser implements UserInterface, UserTourInterface
 
     public function eraseCredentials(): void
     {
+    }
+
+    public function supportsClass($class): bool
+    {
+        return DummyUser::class === $class;
     }
 }

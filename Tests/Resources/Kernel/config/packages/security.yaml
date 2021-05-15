@@ -1,9 +1,16 @@
 security:
     providers:
-        in_memory: { memory: ~ }
+        database:
+            entity:
+                class: RichId\TourBundle\Tests\Resources\Entity\DummyUser
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: ~
+            http_basic: ~
+            pattern: ^/
+            provider: database
+            stateless: false

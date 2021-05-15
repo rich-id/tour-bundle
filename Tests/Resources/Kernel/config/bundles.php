@@ -5,5 +5,6 @@ return [
     RichCongress\BundleToolbox\RichCongressBundleToolboxBundle::class => ['all' => true],
     RichCongress\RecurrentFixturesTestBundle\RichCongressRecurrentFixturesTestBundle::class => ['all' => true],
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
+    Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
     RichId\TourBundle\RichIdTourBundle::class => ['all' => true],
 ];
