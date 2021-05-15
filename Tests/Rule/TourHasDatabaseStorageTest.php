@@ -21,6 +21,11 @@ final class TourHasDatabaseStorageTest extends TestCase
     /** @var TourHasDatabaseStorage */
     public $rule;
 
+    public function testTourHasDatabaseStorageNotFoundTour(): void
+    {
+        $this->assertFalse(($this->rule)('other_tour'));
+    }
+
     public function testTourHasDatabaseStorage(): void
     {
         $this->assertTrue(($this->rule)('database_tour_2'));

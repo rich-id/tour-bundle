@@ -22,6 +22,18 @@ final class TourExtensionTest extends TestCase
     /** @var TourExtension */
     public $extension;
 
+    public function testGetFunctions(): void
+    {
+        $functions = $this->extension->getFunctions();
+        $this->assertCount(5, $functions);
+    }
+
+    public function testGetFilters(): void
+    {
+        $filters = $this->extension->getFilters();
+        $this->assertEmpty($filters);
+    }
+
     public function testGetPerformedToursForCurrentUserFetcherNotAuthenticated(): void
     {
         $this->assertSame([], $this->extension->getPerformedToursForCurrentUser());
