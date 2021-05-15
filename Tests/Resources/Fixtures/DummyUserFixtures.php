@@ -23,5 +23,13 @@ final class DummyUserFixtures extends AbstractFixture
                 'username' => 'my_user_1'
             ]
         );
+
+        $this->createObject(
+            DummyUser::class,
+            '2',
+            [
+                'username' => 'my_user_2'
+            ]
+        );
     }
 }

@@ -43,6 +43,6 @@ class ResetPerformedTours
             throw new UnsupportedActionStorageException($tourKeyname);
         }
 
-        $this->userTourRepository->deleteByTour($tourKeyname);
+        $this->userTourRepository->deleteByTourKeyname($tourKeyname);
     }
 }

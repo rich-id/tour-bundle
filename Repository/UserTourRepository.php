@@ -21,7 +21,7 @@ class UserTourRepository extends ServiceEntityRepository
         parent::__construct($registry, UserTour::class);
     }
 
-    public function deleteByTour(string $tourKeyname): void
+    public function deleteByTourKeyname(string $tourKeyname): void
     {
         $qb = $this->_em->createQueryBuilder();
 
