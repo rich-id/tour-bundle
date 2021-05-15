@@ -33,6 +33,15 @@ final class TourControllerTest extends ControllerTestCase
         $this->assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
     }
 
+    public function testPostEnableNotFoundTour(): void
+    {
+        $user = $this->getRepository(DummyUser::class)->find(1);
+        $this->authenticateUser($user);
+
+        $response = $this->getClient()->post('/rich-id-tours/enable', ['tour' => 'other_tour']);
+        $this->assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
+    }
+
     public function testPostEnable(): void
     {
         $user = $this->getRepository(DummyUser::class)->find(1);
@@ -47,6 +56,15 @@ final class TourControllerTest extends ControllerTestCase
         $tour = $this->tourRepository->findOneByKeyname('database_tour_3');
         $this->assertNotNull($tour);
         $this->assertFalse($tour->isDisabled());
+    }
+
+    public function testPostDisableNotFoundTour(): void
+    {
+        $user = $this->getRepository(DummyUser::class)->find(1);
+        $this->authenticateUser($user);
+
+        $response = $this->getClient()->post('/rich-id-tours/disable', ['tour' => 'other_tour']);
+        $this->assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
     }
 
     public function testPostDisableNotLogged(): void
@@ -75,6 +93,16 @@ final class TourControllerTest extends ControllerTestCase
     {
         $response = $this->getClient()->post('/rich-id-tours/perform', ['tour' => 'database_tour_3']);
         $this->assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+    }
+
+    public function testPostPerformWithDisabledTour(): void
+    {
+        $user = $this->getRepository(DummyUser::class)->find(1);
+        $this->authenticateUser($user);
+
+        $response = $this->getClient()->post('/rich-id-tours/perform', ['tour' => 'database_tour_2']);
+        $this->assertSame(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+        $this->assertSame('"Tour database_tour_2 is disabled"', $response->getContent());
     }
 
     public function testPostPerform(): void
