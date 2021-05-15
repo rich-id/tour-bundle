@@ -53,10 +53,14 @@ class UserTourRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('ut');
 
-        return $qb->where('ut.user = :user')
+        $results = $qb->select('t.keyname')
+            ->join('ut.tour', 't')
+            ->where('ut.user = :user')
             ->setParameter('user', $user->getId())
             ->getQuery()
             ->getResult();
+
+        return \array_column($results, 'keyname');
     }
 
     public function findStatistics(): array

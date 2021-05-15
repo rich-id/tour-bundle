@@ -22,6 +22,19 @@ final class TourExtensionTest extends TestCase
     /** @var TourExtension */
     public $extension;
 
+    public function testGetPerformedToursForCurrentUserFetcherNotAuthenticated(): void
+    {
+        $this->assertSame([], $this->extension->getPerformedToursForCurrentUser());
+    }
+
+    public function testGetPerformedToursForCurrentUserFetcher(): void
+    {
+        $user = $this->getRepository(DummyUser::class)->find(1);
+        $this->authenticateUser($user);
+
+        $this->assertSame(['database_tour_4'], $this->extension->getPerformedToursForCurrentUser());
+    }
+
     public function testGetTours(): void
     {
         $this->assertSame(
@@ -61,9 +74,20 @@ final class TourExtensionTest extends TestCase
                     'duration'   => '+6 months',
                     'isDisabled' => false,
                 ],
-
             ],
             $this->extension->getTours()
+        );
+    }
+
+    public function testGetToursStatistics(): void
+    {
+        $this->assertSame(
+            [
+
+                'database_tour_4' => 1
+
+            ],
+            $this->extension->getToursStatistics()
         );
     }
 
@@ -109,17 +133,5 @@ final class TourExtensionTest extends TestCase
         $this->authenticateUser($user);
 
         $this->assertFalse($this->extension->hasAccessToTour('database_tour_4'));
-    }
-
-    public function testGetToursStatistics(): void
-    {
-        $this->assertSame(
-            [
-
-                'database_tour_4' => 1
-
-            ],
-            $this->extension->getToursStatistics()
-        );
     }
 }
