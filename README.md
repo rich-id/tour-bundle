@@ -34,7 +34,7 @@ rich_id_tour:
 Now that you declared the tours, you can now use the Javascript functions to whether execute a tour or not:
 
 ```javascript
-if (!isTourAlreadyPerformed('tour-1')) {
+if (isTourAvailable('tour-1')) {
     // Make the tour
    markTourAsPerformed('tour-1');
 }

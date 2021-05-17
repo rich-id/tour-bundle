@@ -45,7 +45,7 @@
         return true
     };
 
-    window.savePerformedTour = function(tourId) {
+    window.markTourAsPerformed = function(tourId) {
         if (typeof window.richIdTours[tourId] === 'undefined' || window.richIdTours[tourId] === null) {
             return;
         }

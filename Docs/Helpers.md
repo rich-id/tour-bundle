@@ -4,7 +4,7 @@ The bundle offers javascript helpers to easily use the bundle features. To use t
 
 Here are the exposed Javascript functions to help you make your tour:
 
-| Javascript function              | Description                                           |
-| ---                              | ---                                                   |
-| `markTourAsPerformed(tourId)`    | Mark the given tour as performed for the current user |
-| `isTourAlreadyPerformed(tourId)` | Check if the tour is already performed                |
+| Javascript function            | Description                                          |
+| ---                            | ---                                                  |
+| `markTourAsPerformed(tourId)` | Mark the given tour as performed for the current user |
+| `isTourAvailable(tourId)`     | Check if the tour is available                        |
