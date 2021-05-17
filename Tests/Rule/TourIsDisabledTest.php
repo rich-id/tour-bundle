@@ -4,29 +4,29 @@ namespace RichId\TourBundle\Tests\Rule;
 
 use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
-use RichId\TourBundle\Rule\IsTourDisabled;
+use RichId\TourBundle\Rule\TourIsDisabled;
 
 /**
- * Class IsTourDisabledTest
+ * Class TourIsDisabledTest
  *
  * @package   RichId\TourBundle\Tests\Rule
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
- * @covers \RichId\TourBundle\Rule\IsTourDisabled
+ * @covers \RichId\TourBundle\Rule\TourIsDisabled
  * @TestConfig("fixtures")
  */
-final class IsTourDisabledTest extends TestCase
+final class TourIsDisabledTest extends TestCase
 {
-    /** @var IsTourDisabled */
+    /** @var TourIsDisabled */
     public $rule;
 
-    public function testIsTourDisabled(): void
+    public function testTourIsDisabled(): void
     {
         $this->assertTrue(($this->rule)('database_tour_2'));
     }
 
-    public function testIsTourNotDisabled(): void
+    public function testTourIsNotDisabled(): void
     {
         $this->assertFalse(($this->rule)('database_tour'));
     }

@@ -12,9 +12,9 @@ use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Exception\UnsupportedActionStorageException;
 use RichId\TourBundle\Repository\TourRepository;
 use RichId\TourBundle\Repository\UserTourRepository;
-use RichId\TourBundle\Rule\IsTourDisabled;
 use RichId\TourBundle\Rule\TourExists;
 use RichId\TourBundle\Rule\TourHasDatabaseStorage;
+use RichId\TourBundle\Rule\TourIsDisabled;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -38,8 +38,8 @@ class PerformTour
     /** @var TourHasDatabaseStorage */
     private $tourHasDatabaseStorage;
 
-    /** @var IsTourDisabled */
-    private $isTourDisabled;
+    /** @var TourIsDisabled */
+    private $tourIsDisabled;
 
     /** @var TourRepository */
     private $tourRepository;
@@ -52,7 +52,7 @@ class PerformTour
         EntityManagerInterface $entityManager,
         TourExists $tourExists,
         TourHasDatabaseStorage $tourHasDatabaseStorage,
-        IsTourDisabled $isTourDisabled,
+        TourIsDisabled $tourIsDisabled,
         TourRepository $tourRepository,
         UserTourRepository $userTourRepository
     ) {
@@ -60,7 +60,7 @@ class PerformTour
         $this->entityManager = $entityManager;
         $this->tourExists = $tourExists;
         $this->tourHasDatabaseStorage = $tourHasDatabaseStorage;
-        $this->isTourDisabled = $isTourDisabled;
+        $this->tourIsDisabled = $tourIsDisabled;
         $this->tourRepository = $tourRepository;
         $this->userTourRepository = $userTourRepository;
     }
@@ -75,7 +75,7 @@ class PerformTour
             throw new UnsupportedActionStorageException($tourKeyname);
         }
 
-        if (($this->isTourDisabled)($tourKeyname)) {
+        if (($this->tourIsDisabled)($tourKeyname)) {
             throw new DisabledTourException($tourKeyname);
         }
 

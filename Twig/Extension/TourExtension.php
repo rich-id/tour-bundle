@@ -2,13 +2,13 @@
 
 namespace RichId\TourBundle\Twig\Extension;
 
+use RichId\TourBundle\Fetcher\PerformedToursForCurrentUserFetcher;
 use RichId\TourBundle\Fetcher\ToursFetcher;
 use RichId\TourBundle\Repository\UserTourRepository;
-use RichId\TourBundle\Rule\IsTourDisabled;
+use RichId\TourBundle\Rule\TourIsDisabled;
 use RichId\TourBundle\Rule\UserHasAccessToTour;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use RichId\TourBundle\Fetcher\PerformedToursForCurrentUserFetcher;
 
 /**
  * Class TourExtension.
@@ -31,21 +31,21 @@ class TourExtension extends AbstractExtension
     /** @var UserHasAccessToTour */
     private $userHasAccessToTour;
 
-    /** @var IsTourDisabled */
-    private $isTourDisabled;
+    /** @var TourIsDisabled */
+    private $tourIsDisabled;
 
     public function __construct(
         PerformedToursForCurrentUserFetcher $performedToursForCurrentUserFetcher,
         ToursFetcher $toursFetcher,
         UserTourRepository $userTourRepository,
         UserHasAccessToTour $userHasAccessToTour,
-        IsTourDisabled $isTourDisabled
+        TourIsDisabled $tourIsDisabled
     ) {
         $this->performedToursForCurrentUserFetcher = $performedToursForCurrentUserFetcher;
         $this->toursFetcher = $toursFetcher;
         $this->userTourRepository = $userTourRepository;
         $this->userHasAccessToTour = $userHasAccessToTour;
-        $this->isTourDisabled = $isTourDisabled;
+        $this->tourIsDisabled = $tourIsDisabled;
     }
 
     public function getFunctions(): array
@@ -81,7 +81,7 @@ class TourExtension extends AbstractExtension
 
     public function isTourDisabled(string $tour): bool
     {
-        return ($this->isTourDisabled)($tour);
+        return ($this->tourIsDisabled)($tour);
     }
 }
 

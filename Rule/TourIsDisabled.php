@@ -5,13 +5,13 @@ namespace RichId\TourBundle\Rule;
 use RichId\TourBundle\Repository\TourRepository;
 
 /**
- * Class IsTourDisabled
+ * Class TourIsDisabled
  *
  * @package   RichId\TourBundle\Rule
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  */
-class IsTourDisabled
+class TourIsDisabled
 {
     /** @var TourRepository */
     private $tourRepository;
