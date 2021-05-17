@@ -1,17 +1,75 @@
+{% set tours = getTours() %}
+{% set performedTours = getPerformedToursForCurrentUser() %}
+
 <script type="text/javascript">
-    window.getRichIdTourKey = function(tourId) {
-        return 'rich_id_tour_' + tourId;
+    window.richIdTours = {};
+    window.performedToursForCurrentUser = [];
+
+    {% for tourName,tour in tours %}
+    window.richIdTours['{{ tourName }}'] = {
+        id: '{{ tourName }}',
+        storage: '{{ tour.storage }}',
+        duration: '{{ tour.duration }}',
+        expiresDate: '{{ tour.expiresDate }}',
+        isDisabled: {% if tour.isDisabled %} true {% else %} false {% endif %}
+    };
+    {% endfor %}
+
+    {% for performedTour in performedTours %}
+    window.performedToursForCurrentUser.push('{{ performedTour }}')
+    {% endfor %}
+
+    window.isTourAvailable = function(tourId) {
+        if (typeof window.richIdTours[tourId] === 'undefined' || window.richIdTours[tourId] === null) {
+            return false;
+        }
+
+        var tour = window.richIdTours[tourId];
+
+        if (tour.isDisabled) {
+            return false;
+        }
+
+        if (tour.storage === 'database' && typeof window.performedToursForCurrentUser[tourId] !== 'undefined') {
+            return false;
+        }
+
+        if (tour.storage === 'cookie' && typeof window.internalHasPerformedTourInCookie(tourId)) {
+            return false;
+        }
+
+        if (tour.storage === 'local_storage' && typeof window.internalHasPerformedTourInLocalStorage(tourId)) {
+            return false;
+        }
+
+        return true
+    };
+
+    window.savePerformedTour = function(tourId) {
+        if (typeof window.richIdTours[tourId] === 'undefined' || window.richIdTours[tourId] === null) {
+            return;
+        }
+
+        var tour = window.richIdTours[tourId];
+
+        if (tour.storage === 'database') {
+            window.internalSavedPerformedTourForCurrentUser(tourId);
+        } else if (tour.storage === 'cookie') {
+            window.internalSavedPerformedTourInCookie(tourId, tour.expiresDate);
+        } else if (tour.storage === 'local_storage') {
+            window.internalSavedPerformedTourInLocalStorage(tourId);
+        }
     };
 
     // User
-    window.savedPerformedTourForCurrentUser = function(tourId) {
+    window.internalSavedPerformedTourForCurrentUser = function(tourId) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '{{ url('rich_id_tour_perform_tour') }}' + '?tour=' + tourId);
         xhr.send();
     };
 
     // Cookie
-    window.hasPerformedTourInCookie = function(tourId) {
+    window.internalHasPerformedTourInCookie = function(tourId) {
         return document.cookie
             .split(';')
             .some(function (item) {
@@ -19,25 +77,25 @@
             });
     };
 
-    window.savedPerformedTourInCookie = function(tourId, duration) {
-        if (typeof duration === 'undefined' || duration === null) {
-            duration = 180 * 24 * 60 * 60 * 1000;
-        }
-
-        var d = new Date();
-        d.setTime(d.getTime() + duration);
+    window.internalSavedPerformedTourInCookie = function(tourId, expiresDate) {
+        var d = new Date(expiresDate);
         var expires = "expires=" + d.toUTCString();
 
         document.cookie = getRichIdTourKey(tourId) + "=1;" + expires + ";path=/";
     };
 
     // LocalStorage
-    window.hasPerformedTourInLocalStorage = function(tourId) {
+    window.internalHasPerformedTourInLocalStorage = function(tourId) {
         var founded = window.localStorage.getItem(getRichIdTourKey(tourId));
         return typeof founded !== 'undefined' && founded !== null;
     };
 
-    window.savedPerformedTourInLocalStorage = function(tourId) {
+    window.internalSavedPerformedTourInLocalStorage = function(tourId) {
         window.localStorage.setItem(getRichIdTourKey(tourId), '1');
+    };
+
+    // Helper
+    window.getRichIdTourKey = function(tourId) {
+        return 'rich_id_tour_' + tourId;
     };
 </script>

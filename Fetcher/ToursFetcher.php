@@ -32,7 +32,10 @@ class ToursFetcher
         $tours = [];
 
         foreach ($this->tours as $tourName => $tour) {
+            $date = new \DateTime('today midnight ' . $tour['duration']);
+
             $tours[$tourName] = $tour;
+            $tours[$tourName]['expiresDate'] = $date->format('Y-m-d');
             $tours[$tourName]['isDisabled'] = \in_array($tourName, $disabledTours, true);
         }
 
