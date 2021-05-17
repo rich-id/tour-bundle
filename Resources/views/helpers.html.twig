@@ -30,15 +30,15 @@
             return false;
         }
 
-        if (tour.storage === 'database' && typeof window.performedToursForCurrentUser[tourId] !== 'undefined') {
+        if (tour.storage === 'database' && window.performedToursForCurrentUser.includes(tourId)) {
             return false;
         }
 
-        if (tour.storage === 'cookie' && typeof window.internalHasPerformedTourInCookie(tourId)) {
+        if (tour.storage === 'cookie' && window.internalHasPerformedTourInCookie(tourId)) {
             return false;
         }
 
-        if (tour.storage === 'local_storage' && typeof window.internalHasPerformedTourInLocalStorage(tourId)) {
+        if (tour.storage === 'local_storage' && window.internalHasPerformedTourInLocalStorage(tourId)) {
             return false;
         }
 
