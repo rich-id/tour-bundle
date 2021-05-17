@@ -23,42 +23,52 @@ final class ToursFetcherTest extends TestCase
 
     public function testToursFetcher(): void
     {
+        $dateOneMonth = new \DateTime('today + 1 month');
+        $dateSixMonth = new \DateTime('today + 6 months');
+
         $this->assertSame(
             [
                 'cookie_tour'        => [
-                    'storage'    => 'cookie',
-                    'duration'   => '+6 months',
-                    'isDisabled' => false,
+                    'storage'     => 'cookie',
+                    'duration'    => '+6 months',
+                    'expiresDate' => $dateSixMonth->format('Y-m-d'),
+                    'isDisabled'  => false,
                 ],
                 'cookie_tour_2'      => [
-                    'storage'    => 'cookie',
-                    'duration'   => '+1 months',
-                    'isDisabled' => false,
+                    'storage'     => 'cookie',
+                    'duration'    => '+1 months',
+                    'expiresDate' => $dateOneMonth->format('Y-m-d'),
+                    'isDisabled'  => false,
                 ],
                 'local_storage_tour' => [
-                    'storage'    => 'local_storage',
-                    'duration'   => '+6 months',
-                    'isDisabled' => false,
+                    'storage'     => 'local_storage',
+                    'duration'    => '+6 months',
+                    'expiresDate' => $dateSixMonth->format('Y-m-d'),
+                    'isDisabled'  => false,
                 ],
                 'database_tour'      => [
-                    'storage'    => 'database',
-                    'duration'   => '+6 months',
-                    'isDisabled' => false,
+                    'storage'     => 'database',
+                    'duration'    => '+6 months',
+                    'expiresDate' => $dateSixMonth->format('Y-m-d'),
+                    'isDisabled'  => false,
                 ],
                 'database_tour_2'    => [
-                    'storage'    => 'database',
-                    'duration'   => '+6 months',
-                    'isDisabled' => true,
+                    'storage'     => 'database',
+                    'duration'    => '+6 months',
+                    'expiresDate' => $dateSixMonth->format('Y-m-d'),
+                    'isDisabled'  => true,
                 ],
                 'database_tour_3'    => [
-                    'storage'    => 'database',
-                    'duration'   => '+6 months',
-                    'isDisabled' => false,
+                    'storage'     => 'database',
+                    'duration'    => '+6 months',
+                    'expiresDate' => $dateSixMonth->format('Y-m-d'),
+                    'isDisabled'  => false,
                 ],
                 'database_tour_4'    => [
-                    'storage'    => 'database',
-                    'duration'   => '+6 months',
-                    'isDisabled' => false,
+                    'storage'     => 'database',
+                    'duration'    => '+6 months',
+                    'expiresDate' => $dateSixMonth->format('Y-m-d'),
+                    'isDisabled'  => false,
                 ],
             ],
             ($this->fetcher)()
