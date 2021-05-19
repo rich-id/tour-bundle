@@ -7,6 +7,7 @@ rich_id_tour:
     user_class: App\Entity\DummyUser
     tours:
         my_first_tour:
+            name: 'My tour'
             storage: cookie
             duration: '+6 months'
         my_second_tour:
@@ -23,5 +24,6 @@ The following table describes all entries.
 | `tours`                 |          | object[]                        | The list of available tours                                                                             |
 | `tours.<name>`          |          | string                          | Name of the tour                                                                                        |
 | `tours.<name>.storage`  |  x       | `cookie|local_storage|database` | The method used to store if the user saw the tour                                                       |
+| `tours.<name>.name`    |           | string                          | Tranlated name of the tour (display in the administration if defined)                                                     |
 | `tours.<name>.duration` |          | string                          | Used only for the cookie storage. Sets the lifetime of the cookie. Must be a PHP DateTime valid string. |
 

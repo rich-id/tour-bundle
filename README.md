@@ -23,6 +23,7 @@ rich_id_tour:
     user_class: App\Entity\User
     tours:
         tour-1:
+            name: 'My tour'
             storage: cookie
             duration: '+9 months'
         additionnal-tour:

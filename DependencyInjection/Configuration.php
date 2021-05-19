@@ -43,6 +43,7 @@ class Configuration extends AbstractConfiguration
                     ->children()
                         ->enumNode('storage')->values(['database', 'cookie', 'local_storage'])->end()
                         ->scalarNode('duration')->defaultValue('+6 months')->end()
+                        ->scalarNode('name')->end()
                     ->end()
                 ->end()
             ->end();

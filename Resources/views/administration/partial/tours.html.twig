@@ -15,7 +15,10 @@
 
     {% for tourName,tour in tours %}
         <div class="rich-id-tour-actions">
-            <div class="rich-id-tour-name">{{ tourName }} ({{ tour.storage }})</div>
+            <div class="rich-id-tour-name">
+                {% if tour.name is defined%} {{ tour.name }} {% else %} {{ tourName }} {% endif %}
+                ({{ tour.storage }})
+            </div>
 
             <div class="rich-id-tour-toggle">
                 <input id="form_{{ tourName }}" name="form[{{ tourName }}]" type="checkbox" onclick="richIdTourActivationChange('{{ tourName }}');">
