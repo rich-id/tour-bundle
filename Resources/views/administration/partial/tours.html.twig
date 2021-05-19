@@ -75,20 +75,20 @@
 
             if (document.getElementById('form_' + tourId).checked) {
                 xhr.open('POST', '{{ path('rich_id_tour_enable_tour') }}' + '?tour=' + tourId);
-                xhr.send();
+                xhr.send(null);
 
-                xhr.onload = function() {
+                if (xhr.status === 200) {
                     var message = '{{ 'rich_id_tour.administration.tour_enabled'|trans({}, 'tour')|e('js') }}';
                     richIdTourAddAlert(message.replaceAll('%tour%', tourId));
-                };
+                }
             } else {
                 xhr.open('POST', '{{ path('rich_id_tour_disable_tour') }}' + '?tour=' + tourId);
-                xhr.send();
+                xhr.send(null);
 
-                xhr.onload = function() {
+                if (xhr.status === 200) {
                     var message = '{{ 'rich_id_tour.administration.tour_disabled'|trans({}, 'tour')|e('js') }}';
                     richIdTourAddAlert(message.replaceAll('%tour%', tourId));
-                };
+                }
             }
         };
 
@@ -96,11 +96,11 @@
             if (confirm('{{ 'rich_id_tour.administration.force_tour_reset_confirmation'|trans({}, 'tour')|e('js') }}')) {
                 var xhr = new XMLHttpRequest();
                 xhr.open('DELETE', '{{ path('rich_id_tour_reset_performed_tours') }}' + '?tour=' + tourId);
-                xhr.send();
+                xhr.send(null);
 
-                xhr.onload = function() {
+                if (xhr.status === 200) {
                     richIdTourAddAlert('{{ 'rich_id_tour.administration.tour_reseted'|trans({}, 'tour')|e('js') }}');
-                };
+                }
             }
         };
     });
