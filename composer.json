@@ -17,7 +17,6 @@
     },
     "require": {
         "php": ">=7.3",
-        "doctrine/doctrine-migrations-bundle": "^2.0",
         "doctrine/orm": "^2.7",
         "richcongress/bundle-toolbox": "*",
         "symfony/http-foundation": "^4.4",
