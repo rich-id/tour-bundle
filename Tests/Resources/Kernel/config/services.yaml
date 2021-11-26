@@ -9,3 +9,5 @@ services:
     RichId\TourBundle\Tests\Resources\Fixtures\DummyUserFixtures: ~
     RichId\TourBundle\Tests\Resources\Fixtures\TourFixtures: ~
     RichId\TourBundle\Tests\Resources\Fixtures\UserTourFixtures: ~
+
+    RichId\TourBundle\Tests\Resources\Stub\EventDispatcherStub: ~

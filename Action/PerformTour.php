@@ -5,6 +5,7 @@ namespace RichId\TourBundle\Action;
 use Doctrine\ORM\EntityManagerInterface;
 use RichId\TourBundle\Entity\Tour;
 use RichId\TourBundle\Entity\UserTour;
+use RichId\TourBundle\Event\TourPerformedEvent;
 use RichId\TourBundle\Exception\DisabledTourException;
 use RichId\TourBundle\Exception\NotAuthenticatedException;
 use RichId\TourBundle\Entity\UserTourInterface;
@@ -16,6 +17,7 @@ use RichId\TourBundle\Rule\TourExists;
 use RichId\TourBundle\Rule\TourHasDatabaseStorage;
 use RichId\TourBundle\Rule\TourIsDisabled;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class PerformTour
@@ -47,6 +49,9 @@ class PerformTour
     /** @var UserTourRepository */
     private $userTourRepository;
 
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
     public function __construct(
         Security $security,
         EntityManagerInterface $entityManager,
@@ -54,7 +59,8 @@ class PerformTour
         TourHasDatabaseStorage $tourHasDatabaseStorage,
         TourIsDisabled $tourIsDisabled,
         TourRepository $tourRepository,
-        UserTourRepository $userTourRepository
+        UserTourRepository $userTourRepository,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->security = $security;
         $this->entityManager = $entityManager;
@@ -63,6 +69,7 @@ class PerformTour
         $this->tourIsDisabled = $tourIsDisabled;
         $this->tourRepository = $tourRepository;
         $this->userTourRepository = $userTourRepository;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(string $tourKeyname): void
@@ -84,6 +91,8 @@ class PerformTour
         if (!$user instanceof UserTourInterface) {
             throw new NotAuthenticatedException();
         }
+
+        $this->eventDispatcher->dispatch(new TourPerformedEvent($tourKeyname, $user));
 
         $performedTour = $this->userTourRepository->findOneByUserAndTour($user, $tourKeyname);
 

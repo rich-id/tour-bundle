@@ -5,6 +5,7 @@ namespace RichId\TourBundle\Tests\Action;
 use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Action\PerformTour;
+use RichId\TourBundle\Event\TourPerformedEvent;
 use RichId\TourBundle\Exception\DisabledTourException;
 use RichId\TourBundle\Exception\NotAuthenticatedException;
 use RichId\TourBundle\Exception\NotFoundTourException;
@@ -12,6 +13,7 @@ use RichId\TourBundle\Exception\UnsupportedActionStorageException;
 use RichId\TourBundle\Repository\TourRepository;
 use RichId\TourBundle\Repository\UserTourRepository;
 use RichId\TourBundle\Tests\Resources\Entity\DummyUser;
+use RichId\TourBundle\Tests\Resources\Stub\EventDispatcherStub;
 
 /**
  * Class PerformTourTest
@@ -33,6 +35,11 @@ final class PerformTourTest extends TestCase
 
     /** @var UserTourRepository */
     public $userTourRepository;
+
+    protected function beforeTest(): void
+    {
+        EventDispatcherStub::setUp();
+    }
 
     public function testActionNotExistingTour(): void
     {
@@ -91,6 +98,11 @@ final class PerformTourTest extends TestCase
         $userTour = $this->userTourRepository->findOneByUserAndTour($user, 'database_tour_3');
         $this->assertNotNull($tour);
         $this->assertNotNull($userTour);
+
+        $this->assertCount(1, EventDispatcherStub::$events);
+        $this->assertInstanceOf(TourPerformedEvent::class, EventDispatcherStub::$events[0]);
+        $this->assertSame('database_tour_3', EventDispatcherStub::$events[0]->getTourId());
+        $this->assertSame($user, EventDispatcherStub::$events[0]->getUser());
     }
 
     public function testActionTourAlreadyExistInDatabase(): void
@@ -110,6 +122,11 @@ final class PerformTourTest extends TestCase
         $userTour = $this->userTourRepository->findOneByUserAndTour($user, 'database_tour');
         $this->assertNotNull($tour);
         $this->assertNotNull($userTour);
+
+        $this->assertCount(1, EventDispatcherStub::$events);
+        $this->assertInstanceOf(TourPerformedEvent::class, EventDispatcherStub::$events[0]);
+        $this->assertSame('database_tour', EventDispatcherStub::$events[0]->getTourId());
+        $this->assertSame($user, EventDispatcherStub::$events[0]->getUser());
     }
 
     public function testActionTourAlreadyPerformed(): void
@@ -129,5 +146,10 @@ final class PerformTourTest extends TestCase
         $userTour = $this->userTourRepository->findOneByUserAndTour($user, 'database_tour_4');
         $this->assertNotNull($tour);
         $this->assertNotNull($userTour);
+
+        $this->assertCount(1, EventDispatcherStub::$events);
+        $this->assertInstanceOf(TourPerformedEvent::class, EventDispatcherStub::$events[0]);
+        $this->assertSame('database_tour_4', EventDispatcherStub::$events[0]->getTourId());
+        $this->assertSame($user, EventDispatcherStub::$events[0]->getUser());
     }
 }
