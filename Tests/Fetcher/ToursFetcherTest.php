@@ -14,7 +14,7 @@ use RichId\TourBundle\Fetcher\ToursFetcher;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\Fetcher\ToursFetcher
- * @TestConfig("container")
+ * @TestConfig("fixtures")
  */
 final class ToursFetcherTest extends TestCase
 {

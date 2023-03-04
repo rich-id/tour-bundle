@@ -27,8 +27,7 @@ final class AdministrationControllerTest extends ControllerTestCase
 
     public function testTours(): void
     {
-        $user = $this->getReference(DummyUser::class, '1');
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $response = $this->getClient()->get('/administration/tours');
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());

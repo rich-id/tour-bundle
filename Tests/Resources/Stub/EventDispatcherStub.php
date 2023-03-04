@@ -22,7 +22,7 @@ final class EventDispatcherStub extends AbstractOverrideService implements Event
         self::$events = [];
     }
 
-    public function dispatch($event)
+    public function dispatch(object $event, string $eventName = null): object
     {
         self::$events[] = $event;
 

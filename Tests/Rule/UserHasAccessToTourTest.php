@@ -34,24 +34,21 @@ final class UserHasAccessToTourTest extends TestCase
 
     public function testUserHasAccessToTourDIsabled(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $this->assertFalse(($this->rule)('database_tour_2'));
     }
 
     public function testUserHasAccessToTour(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $this->assertTrue(($this->rule)('database_tour'));
     }
 
     public function testUserHasAccessToTourAlreadyPerformed(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $this->assertFalse(($this->rule)('database_tour_4'));
     }

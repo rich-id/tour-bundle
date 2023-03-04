@@ -29,8 +29,7 @@ final class PerformedToursForCurrentUserFetcherTest extends TestCase
 
     public function testPerformedToursForCurrentUserFetcher(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $this->assertSame(['database_tour_4'], ($this->fetcher)());
     }

@@ -30,6 +30,11 @@ class Tour
      */
     private $isDisabled = false;
 
+    public function getId(): string
+    {
+        return $this->keyname;
+    }
+
     public function getKeyname(): string
     {
         return $this->keyname;

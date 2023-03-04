@@ -41,8 +41,7 @@ final class TourExtensionTest extends TestCase
 
     public function testGetPerformedToursForCurrentUserFetcher(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $this->assertSame(['database_tour_4'], $this->extension->getPerformedToursForCurrentUser());
     }
@@ -135,24 +134,21 @@ final class TourExtensionTest extends TestCase
 
     public function testHasAccessToTourDIsabled(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $this->assertFalse($this->extension->hasAccessToTour('database_tour_2'));
     }
 
     public function testHasAccessToTour(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $this->assertTrue($this->extension->hasAccessToTour('database_tour'));
     }
 
     public function testHasAccessToTourAlreadyPerformed(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $this->assertFalse($this->extension->hasAccessToTour('database_tour_4'));
     }

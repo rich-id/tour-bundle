@@ -84,7 +84,7 @@ final class PerformTourTest extends TestCase
     public function testActionTourNotExistInDatabase(): void
     {
         $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $tour = $this->tourRepository->findOneByKeyname('database_tour_3');
         $userTour = $this->userTourRepository->findOneByUserAndTour($user, 'database_tour_3');
@@ -108,7 +108,7 @@ final class PerformTourTest extends TestCase
     public function testActionTourAlreadyExistInDatabase(): void
     {
         $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $tour = $this->tourRepository->findOneByKeyname('database_tour');
         $userTour = $this->userTourRepository->findOneByUserAndTour($user, 'database_tour');
@@ -132,7 +132,7 @@ final class PerformTourTest extends TestCase
     public function testActionTourAlreadyPerformed(): void
     {
         $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $tour = $this->tourRepository->findOneByKeyname('database_tour_4');
         $userTour = $this->userTourRepository->findOneByUserAndTour($user, 'database_tour_4');

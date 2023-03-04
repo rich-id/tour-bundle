@@ -35,8 +35,7 @@ final class TourControllerTest extends ControllerTestCase
 
     public function testPostEnableNotFoundTour(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $response = $this->getClient()->post('/rich-id-tours/enable', ['tour' => 'other_tour']);
         $this->assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
@@ -44,8 +43,7 @@ final class TourControllerTest extends ControllerTestCase
 
     public function testPostEnable(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $tour = $this->tourRepository->findOneByKeyname('database_tour_3');
         $this->assertNull($tour);
@@ -60,8 +58,7 @@ final class TourControllerTest extends ControllerTestCase
 
     public function testPostDisableNotFoundTour(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $response = $this->getClient()->post('/rich-id-tours/disable', ['tour' => 'other_tour']);
         $this->assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
@@ -75,8 +72,7 @@ final class TourControllerTest extends ControllerTestCase
 
     public function testPostDisable(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $tour = $this->tourRepository->findOneByKeyname('database_tour_3');
         $this->assertNull($tour);
@@ -97,8 +93,7 @@ final class TourControllerTest extends ControllerTestCase
 
     public function testPostPerformWithDisabledTour(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $response = $this->getClient()->post('/rich-id-tours/perform', ['tour' => 'database_tour_2']);
         $this->assertSame(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
@@ -108,7 +103,7 @@ final class TourControllerTest extends ControllerTestCase
     public function testPostPerform(): void
     {
         $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $tour = $this->tourRepository->findOneByKeyname('database_tour_3');
         $userTour = $this->userTourRepository->findOneByUserAndTour($user, 'database_tour_3');
@@ -126,8 +121,7 @@ final class TourControllerTest extends ControllerTestCase
 
     public function testDeleteResetPerformedTours(): void
     {
-        $user = $this->getRepository(DummyUser::class)->find(1);
-        $this->authenticateUser($user);
+        $this->authenticate(DummyUser::class, '1');
 
         $this->assertCount(1, $this->userTourRepository->findAll());
 
