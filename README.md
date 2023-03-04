@@ -3,7 +3,7 @@
 Getting Started With RichIdTourBundle
 =======================================
 
-This version of the bundle requires Symfony 4.4+ and PHP 7.3+.
+This version of the bundle requires Symfony 5.4+ and PHP 7.3+.
 
 [![Package version](https://img.shields.io/packagist/v/rich-id/tour-bundle)](https://packagist.org/packages/rich-id/tour-bundle)
 [![Actions Status](https://github.com/rich-id/tour-bundle/workflows/Tests/badge.svg)](https://github.com/t/rich-id/tour-bundle/actions)
