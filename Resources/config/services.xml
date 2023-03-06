@@ -21,6 +21,7 @@
         <service id="RichId\TourBundle\Repository\TourRepository" />
         <service id="RichId\TourBundle\Repository\UserTourRepository" />
 
+        <service id="RichId\TourBundle\Rule\HasAccessToAdministration" />
         <service id="RichId\TourBundle\Rule\TourExists" />
         <service id="RichId\TourBundle\Rule\TourHasDatabaseStorage" />
         <service id="RichId\TourBundle\Rule\TourIsDisabled" />

@@ -9,6 +9,7 @@ use RichId\TourBundle\Action\PerformTour;
 use RichId\TourBundle\Action\ResetPerformedTours;
 use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Exception\TourException;
+use RichId\TourBundle\Rule\HasAccessToAdministration;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,11 +25,19 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class TourController extends AbstractController
 {
+    /** @var HasAccessToAdministration */
+    protected $hasAccessToAdministration;
+
+    public function __construct(HasAccessToAdministration $hasAccessToAdministration)
+    {
+        $this->hasAccessToAdministration = $hasAccessToAdministration;
+    }
+
     public function enable(Request $request, EnableTour $enableTour, EntityManagerInterface $entityManager): JsonResponse
     {
         return $this->action(
             $request,
-            'ROLE_RICH_ID_TOUR_ADMIN',
+            true,
             function (string $tourKeyname) use ($enableTour, $entityManager) {
                 $enableTour($tourKeyname);
                 $entityManager->flush();
@@ -40,7 +49,7 @@ class TourController extends AbstractController
     {
         return $this->action(
             $request,
-            'ROLE_RICH_ID_TOUR_ADMIN',
+            true,
             function (string $tourKeyname) use ($disableTour, $entityManager) {
                 $disableTour($tourKeyname);
                 $entityManager->flush();
@@ -52,7 +61,7 @@ class TourController extends AbstractController
     {
         return $this->action(
             $request,
-            'IS_AUTHENTICATED_FULLY',
+            false,
             function (string $tourKeyname) use ($performTour, $entityManager) {
                 $performTour($tourKeyname);
                 $entityManager->flush();
@@ -64,16 +73,20 @@ class TourController extends AbstractController
     {
         return $this->action(
             $request,
-            'ROLE_RICH_ID_TOUR_ADMIN',
+            true,
             function (string $tourKeyname) use ($resetPerformedTours) {
                 $resetPerformedTours($tourKeyname);
             }
         );
     }
 
-    private function action(Request $request, string $role, callable $action): JsonResponse
+    private function action(Request $request, bool $checkAdminRole, callable $action): JsonResponse
     {
-        if (!$this->isGranted($role)) {
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw new AccessDeniedHttpException();
+        }
+
+        if ($checkAdminRole && !($this->hasAccessToAdministration)()) {
             throw new AccessDeniedHttpException();
         }
 

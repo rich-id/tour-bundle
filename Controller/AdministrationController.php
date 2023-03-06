@@ -2,6 +2,7 @@
 
 namespace RichId\TourBundle\Controller;
 
+use RichId\TourBundle\Rule\HasAccessToAdministration;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -15,9 +16,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class AdministrationController extends AbstractController
 {
-    public function tours(): Response
+    public function tours(HasAccessToAdministration $hasAccessToAdministration): Response
     {
-        if (!$this->isGranted('ROLE_RICH_ID_TOUR_ADMIN')) {
+        if (!($hasAccessToAdministration)()) {
             throw new AccessDeniedException();
         }
 

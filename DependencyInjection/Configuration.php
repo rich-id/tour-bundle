@@ -3,6 +3,7 @@
 namespace RichId\TourBundle\DependencyInjection;
 
 use RichCongress\BundleToolbox\Configuration\AbstractConfiguration;
+use RichId\TourBundle\RichIdTourBundle;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
@@ -19,10 +20,18 @@ class Configuration extends AbstractConfiguration
     {
         $children = $rootNode->children();
 
+        $this->administrationRole($children);
         $this->buildUserClassNode($children);
         $this->buildToursNode($children);
 
         $children->end();
+    }
+
+    protected function administrationRole(NodeBuilder $nodeBuilder): void
+    {
+        $nodeBuilder
+            ->scalarNode('admistration_role')
+            ->defaultValue(RichIdTourBundle::ROLE_RICH_ID_TOUR_ADMIN);
     }
 
     protected function buildUserClassNode(NodeBuilder $nodeBuilder): NodeBuilder

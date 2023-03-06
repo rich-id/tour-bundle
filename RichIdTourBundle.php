@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class RichIdTourBundle extends AbstractBundle
 {
     public const COMPILER_PASSES = [DoctrineResolveTargetEntityPass::class];
+    public const ROLE_RICH_ID_TOUR_ADMIN = 'ROLE_RICH_ID_TOUR_ADMIN';
 
     public function build(ContainerBuilder $container): void
     {

@@ -25,10 +25,10 @@ final class ConfigurationTest extends TestCase
 
         $this->assertSame(
             [
-                'user_class' => DummyUser::class,
-                'tours'      => [
+                'user_class'        => DummyUser::class,
+                'tours'             => [
                     'cookie_tour'        => [
-                        'storage' => 'cookie',
+                        'storage'  => 'cookie',
                         'duration' => '+6 months',
                     ],
                     'cookie_tour_2'      => [
@@ -36,26 +36,27 @@ final class ConfigurationTest extends TestCase
                         'duration' => '+1 months',
                     ],
                     'local_storage_tour' => [
-                        'storage' => 'local_storage',
+                        'storage'  => 'local_storage',
                         'duration' => '+6 months',
                     ],
                     'database_tour'      => [
-                        'storage' => 'database',
+                        'storage'  => 'database',
                         'duration' => '+6 months',
                     ],
                     'database_tour_2'    => [
-                        'storage' => 'database',
+                        'storage'  => 'database',
                         'duration' => '+6 months',
                     ],
                     'database_tour_3'    => [
-                        'storage' => 'database',
+                        'storage'  => 'database',
                         'duration' => '+6 months',
                     ],
                     'database_tour_4'    => [
-                        'storage' => 'database',
+                        'storage'  => 'database',
                         'duration' => '+6 months',
                     ],
                 ],
+                'admistration_role' => 'ROLE_RICH_ID_TOUR_ADMIN',
             ],
             $parameterBag->get('rich_id_tour')
         );
