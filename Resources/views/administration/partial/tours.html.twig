@@ -26,7 +26,7 @@
             </div>
 
             {% if tour.storage == 'database' %}
-                <button class="rich-id-tour-button" onclick="richIdTourReset('{{ tourName }}');">
+                <button class="{% block tourResetButtonClass %}rich-id-tour-button{% endblock %}" onclick="richIdTourReset('{{ tourName }}');">
                     {{ 'rich_id_tour.administration.force_tour_reset'|trans({}, 'tour') }}
                 </button>
 
