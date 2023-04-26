@@ -2,10 +2,9 @@
 
 namespace RichId\TourBundle\Controller;
 
-use RichId\TourBundle\Rule\HasAccessToAdministration;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class AdministrationController.
@@ -16,12 +15,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class AdministrationController extends AbstractController
 {
-    public function tours(HasAccessToAdministration $hasAccessToAdministration): Response
+    /** @IsGranted("EDIT_ADMINISTRATION_TOUR") */
+    public function tours(): Response
     {
-        if (!($hasAccessToAdministration)()) {
-            throw new AccessDeniedException();
-        }
-
         return $this->render('@RichIdTour/administration/tours.html.twig');
     }
 }

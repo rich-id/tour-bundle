@@ -27,6 +27,8 @@
         <service id="RichId\TourBundle\Rule\TourIsDisabled" />
         <service id="RichId\TourBundle\Rule\UserHasAccessToTour" />
 
+        <service id="RichId\TourBundle\SecurityVoter\TourAdministrationVoter" />
+
         <service id="RichId\TourBundle\Twig\Extension\TourExtension" />
     </services>
 </container>

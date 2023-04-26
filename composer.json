@@ -19,6 +19,7 @@
         "php": ">=7.3",
         "doctrine/orm": "^2.7",
         "richcongress/bundle-toolbox": "*",
+        "sensio/framework-extra-bundle": "^5.0 || ^6.0",
         "symfony/event-dispatcher": "^5.0",
         "symfony/http-foundation": "^5.0",
         "symfony/security-bundle": "^5.0",
