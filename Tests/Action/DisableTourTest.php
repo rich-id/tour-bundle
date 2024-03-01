@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Tests\Action;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Action\DisableTour;
 use RichId\TourBundle\Exception\NotFoundTourException;
@@ -16,8 +16,8 @@ use RichId\TourBundle\Repository\TourRepository;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\Action\DisableTour
- * @TestConfig("fixtures")
  */
+#[TestConfig('fixtures')]
 final class DisableTourTest extends TestCase
 {
     /** @var DisableTour */

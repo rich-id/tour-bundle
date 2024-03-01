@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Tests\Action;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Action\ResetPerformedTours;
 use RichId\TourBundle\Exception\NotFoundTourException;
@@ -17,8 +17,8 @@ use RichId\TourBundle\Repository\UserTourRepository;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\Action\ResetPerformedTours
- * @TestConfig("fixtures")
  */
+#[TestConfig('fixtures')]
 final class ResetPerformedToursTest extends TestCase
 {
     /** @var ResetPerformedTours */

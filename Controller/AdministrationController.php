@@ -2,9 +2,9 @@
 
 namespace RichId\TourBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class AdministrationController.
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AdministrationController extends AbstractController
 {
-    /** @IsGranted("EDIT_ADMINISTRATION_TOUR") */
+    #[IsGranted('EDIT_ADMINISTRATION_TOUR')]
     public function tours(): Response
     {
         return $this->render('@RichIdTour/administration/tours.html.twig');

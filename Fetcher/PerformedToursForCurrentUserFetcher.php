@@ -4,7 +4,7 @@ namespace RichId\TourBundle\Fetcher;
 
 use RichId\TourBundle\Entity\UserTourInterface;
 use RichId\TourBundle\Repository\UserTourRepository;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 /**
  * Class PerformedToursForCurrentUserFetcher

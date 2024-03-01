@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Tests\Rule;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Rule\UserHasAccessToTour;
 use RichId\TourBundle\Tests\Resources\Entity\DummyUser;
@@ -15,8 +15,8 @@ use RichId\TourBundle\Tests\Resources\Entity\DummyUser;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\Rule\UserHasAccessToTour
- * @TestConfig("fixtures")
  */
+#[TestConfig('fixtures')]
 final class UserHasAccessToTourTest extends TestCase
 {
     /** @var UserHasAccessToTour */

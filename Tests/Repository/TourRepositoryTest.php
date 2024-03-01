@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Tests\Repository;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Repository\TourRepository;
 
@@ -14,8 +14,8 @@ use RichId\TourBundle\Repository\TourRepository;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\Repository\TourRepository
- * @TestConfig("fixtures")
  */
+#[TestConfig('fixtures')]
 final class TourRepositoryTest extends TestCase
 {
     /** @var TourRepository */

@@ -3,8 +3,8 @@
 namespace RichId\TourBundle\Rule;
 
 use RichId\TourBundle\RichIdTourBundle;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Security\Core\Security;
 
 class HasAccessToAdministration
 {

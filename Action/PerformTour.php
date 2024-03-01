@@ -16,7 +16,7 @@ use RichId\TourBundle\Repository\UserTourRepository;
 use RichId\TourBundle\Rule\TourExists;
 use RichId\TourBundle\Rule\TourHasDatabaseStorage;
 use RichId\TourBundle\Rule\TourIsDisabled;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**

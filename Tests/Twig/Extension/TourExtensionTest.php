@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Tests\Twig\Extension;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Tests\Resources\Entity\DummyUser;
 use RichId\TourBundle\Twig\Extension\TourExtension;
@@ -15,8 +15,8 @@ use RichId\TourBundle\Twig\Extension\TourExtension;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\Twig\Extension\TourExtension
- * @TestConfig("fixtures")
  */
+#[TestConfig('fixtures')]
 final class TourExtensionTest extends TestCase
 {
     /** @var TourExtension */

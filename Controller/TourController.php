@@ -9,11 +9,11 @@ use RichId\TourBundle\Action\PerformTour;
 use RichId\TourBundle\Action\ResetPerformedTours;
 use RichId\TourBundle\Exception\NotFoundTourException;
 use RichId\TourBundle\Exception\TourException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class TourController.
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class TourController extends AbstractController
 {
-    /** @IsGranted("EDIT_ADMINISTRATION_TOUR", statusCode=403) */
+    #[IsGranted('EDIT_ADMINISTRATION_TOUR', statusCode: 403)]
     public function enable(Request $request, EnableTour $enableTour, EntityManagerInterface $entityManager): JsonResponse
     {
         return $this->action(
@@ -36,7 +36,7 @@ class TourController extends AbstractController
         );
     }
 
-    /** @IsGranted("EDIT_ADMINISTRATION_TOUR", statusCode=403) */
+    #[IsGranted('EDIT_ADMINISTRATION_TOUR', statusCode: 403)]
     public function disable(Request $request, DisableTour $disableTour, EntityManagerInterface $entityManager): JsonResponse
     {
         return $this->action(
@@ -48,7 +48,7 @@ class TourController extends AbstractController
         );
     }
 
-    /** @IsGranted("IS_AUTHENTICATED_FULLY", statusCode=403) */
+    #[IsGranted('IS_AUTHENTICATED_FULLY', statusCode: 403)]
     public function perform(Request $request, PerformTour $performTour, EntityManagerInterface $entityManager): JsonResponse
     {
         return $this->action(
@@ -60,7 +60,7 @@ class TourController extends AbstractController
         );
     }
 
-    /** @IsGranted("EDIT_ADMINISTRATION_TOUR", statusCode=403) */
+    #[IsGranted('EDIT_ADMINISTRATION_TOUR', statusCode: 403)]
     public function resetPerformedTours(Request $request, ResetPerformedTours $resetPerformedTours): JsonResponse
     {
         return $this->action(

@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Tests;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Tests\Resources\Entity\DummyUser;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -15,8 +15,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
  * @copyright  2014 - 2021 Rich ID (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\DependencyInjection\Configuration
- * @TestConfig("container")
  */
+#[TestConfig('container')]
 final class ConfigurationTest extends TestCase
 {
     public function testConfiguration(): void

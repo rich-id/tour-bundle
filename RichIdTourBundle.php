@@ -33,9 +33,10 @@ class RichIdTourBundle extends AbstractBundle
         }
 
         $container->addCompilerPass(
-            DoctrineOrmMappingsPass::createAnnotationMappingDriver(
+            DoctrineOrmMappingsPass::createAttributeMappingDriver(
                 ['RichId\TourBundle\Entity'],
-                [__DIR__ . '/Entity']
+                [__DIR__ . '/Entity'],
+                reportFieldsWhereDeclared: true
             )
         );
     }

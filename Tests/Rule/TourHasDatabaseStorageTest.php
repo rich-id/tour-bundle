@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Tests\Rule;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Rule\TourHasDatabaseStorage;
 
@@ -14,8 +14,8 @@ use RichId\TourBundle\Rule\TourHasDatabaseStorage;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\Rule\TourHasDatabaseStorage
- * @TestConfig("fixtures")
  */
+#[TestConfig('fixtures')]
 final class TourHasDatabaseStorageTest extends TestCase
 {
     /** @var TourHasDatabaseStorage */

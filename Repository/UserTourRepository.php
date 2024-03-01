@@ -23,7 +23,7 @@ class UserTourRepository extends ServiceEntityRepository
 
     public function deleteByTourKeyname(string $tourKeyname): void
     {
-        $qb = $this->_em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         $qb->delete(UserTour::class, 'ut')
             ->where('ut.tour = :keyname')
@@ -39,12 +39,8 @@ class UserTourRepository extends ServiceEntityRepository
         return $qb->join('ut.tour' , 't')
             ->where('t.keyname = :keyname')
             ->andWhere('ut.user = :user')
-            ->setParameters(
-                [
-                    'keyname' => $tourKeyname,
-                    'user'    => $user->getId(),
-                ]
-            )
+            ->setParameter('keyname', $tourKeyname)
+            ->setParameter('user', $user->getId())
             ->getQuery()
             ->getOneOrNullResult();
     }

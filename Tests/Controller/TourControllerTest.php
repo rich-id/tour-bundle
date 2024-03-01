@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Tests\Controller;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\ControllerTestCase;
 use RichId\TourBundle\Repository\TourRepository;
 use RichId\TourBundle\Repository\UserTourRepository;
@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\Controller\TourController
- * @TestConfig("fixtures")
  */
+#[TestConfig('fixtures')]
 final class TourControllerTest extends ControllerTestCase
 {
     /** @var TourRepository */

@@ -12,27 +12,18 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @package   RichId\TourBundle\Tests\Resources\Entity
  * @author    Nicolas Guilloux <nicolas.guilloux@rich-id.fr>
  * @copyright 2014 - 2021 Rich ID (https://www.rich-id.fr)
- *
- * @ORM\Entity()
- * @ORM\Table(name="app_user")
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'app_user')]
 class DummyUser implements UserInterface, UserTourInterface
 {
-    /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", options={"unsigned":true})
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer', options: ['unsigned' => true])]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected int $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=false)
-     */
-    protected $username;
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
+    protected string $username;
 
     public function getId(): ?int
     {
@@ -66,5 +57,10 @@ class DummyUser implements UserInterface, UserTourInterface
     public function supportsClass($class): bool
     {
         return DummyUser::class === $class;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getUsername();
     }
 }

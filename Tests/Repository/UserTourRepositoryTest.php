@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Tests\Repository;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Entity\UserTour;
 use RichId\TourBundle\Repository\UserTourRepository;
@@ -16,8 +16,8 @@ use RichId\TourBundle\Tests\Resources\Entity\DummyUser;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\Repository\UserTourRepository
- * @TestConfig("fixtures")
  */
+#[TestConfig('fixtures')]
 final class UserTourRepositoryTest extends TestCase
 {
     /** @var UserTourRepository */

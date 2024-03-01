@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Tests\Fetcher;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Fetcher\PerformedToursForCurrentUserFetcher;
 use RichId\TourBundle\Tests\Resources\Entity\DummyUser;
@@ -15,8 +15,8 @@ use RichId\TourBundle\Tests\Resources\Entity\DummyUser;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\Fetcher\PerformedToursForCurrentUserFetcher
- * @TestConfig("fixtures")
  */
+#[TestConfig('fixtures')]
 final class PerformedToursForCurrentUserFetcherTest extends TestCase
 {
     /** @var PerformedToursForCurrentUserFetcher */

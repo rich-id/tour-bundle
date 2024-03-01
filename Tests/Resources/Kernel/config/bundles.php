@@ -6,6 +6,5 @@ return [
     RichCongress\RecurrentFixturesTestBundle\RichCongressRecurrentFixturesTestBundle::class => ['test' => true],
     Symfony\Bundle\SecurityBundle\SecurityBundle::class                                     => ['test' => true],
     Symfony\Bundle\TwigBundle\TwigBundle::class                                             => ['test' => true],
-    Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class                    => ['test' => true],
     RichId\TourBundle\RichIdTourBundle::class                                               => ['test' => true],
 ];

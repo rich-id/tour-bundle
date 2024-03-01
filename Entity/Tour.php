@@ -2,6 +2,7 @@
 
 namespace RichId\TourBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use RichId\TourBundle\Repository\TourRepository;
 
 /**
  * Class Tour.
@@ -9,26 +10,17 @@ use Doctrine\ORM\Mapping as ORM;
  * @package   RichId\TourBundle\Entity
  * @author    Hugo Dumazeau <hugo.dumazeau@rich-id.fr>
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
- *
- * @ORM\Entity(repositoryClass="RichId\TourBundle\Repository\TourRepository")
- * @ORM\Table(name="rich_id_tour")
  */
+#[ORM\Entity(repositoryClass: TourRepository::class)]
+#[ORM\Table(name: 'rich_id_tour')]
 class Tour
 {
-    /**
-     * @var string
-     *
-     * @ORM\Id
-     * @ORM\Column(type="string", length=255, nullable=false, name="keyname")
-     */
-    protected $keyname;
+    #[ORM\Id]
+    #[ORM\Column(name: 'keyname', type: 'string', length: 255, nullable: false)]
+    protected string $keyname;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", nullable=false, name="is_disabled", options={"default":0})
-     */
-    private $isDisabled = false;
+    #[ORM\Column(name: "is_disabled", type: 'boolean', nullable: false, options: ["default" => 0])]
+    private bool $isDisabled = false;
 
     public function getId(): string
     {

@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Tests\Fetcher;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Fetcher\ToursFetcher;
 
@@ -14,8 +14,8 @@ use RichId\TourBundle\Fetcher\ToursFetcher;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\Fetcher\ToursFetcher
- * @TestConfig("fixtures")
  */
+#[TestConfig('fixtures')]
 final class ToursFetcherTest extends TestCase
 {
     /** @var ToursFetcher */

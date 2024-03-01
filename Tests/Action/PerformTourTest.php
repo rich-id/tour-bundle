@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Tests\Action;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Action\PerformTour;
 use RichId\TourBundle\Event\TourPerformedEvent;
@@ -23,8 +23,8 @@ use RichId\TourBundle\Tests\Resources\Stub\EventDispatcherStub;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\Action\PerformTour
- * @TestConfig("fixtures")
  */
+#[TestConfig('fixtures')]
 final class PerformTourTest extends TestCase
 {
     /** @var PerformTour */

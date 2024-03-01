@@ -2,7 +2,7 @@
 
 namespace RichId\TourBundle\Tests\Rule;
 
-use RichCongress\TestFramework\TestConfiguration\Annotation\TestConfig;
+use RichCongress\TestFramework\TestConfiguration\Attribute\TestConfig;
 use RichCongress\TestSuite\TestCase\TestCase;
 use RichId\TourBundle\Rule\TourExists;
 
@@ -14,8 +14,8 @@ use RichId\TourBundle\Rule\TourExists;
  * @copyright 2014 - 2021 RichId (https://www.rich-id.fr)
  *
  * @covers \RichId\TourBundle\Rule\TourExists
- * @TestConfig("fixtures")
  */
+#[TestConfig('fixtures')]
 final class TourExistsTest extends TestCase
 {
     /** @var TourExists */
