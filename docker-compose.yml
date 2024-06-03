@@ -1,4 +1,3 @@
-version: '3.7'
 services:
     application:
         container_name: tour_bundle_app

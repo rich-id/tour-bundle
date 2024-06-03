@@ -1,6 +1,6 @@
 {
     "name": "rich-id/tour-bundle",
-    "description": "A tour bundle for Symfony 4.4",
+    "description": "A tour bundle for Symfony 6.0",
     "type": "symfony-bundle",
     "license": "MIT",
     "minimum-stability": "dev",
@@ -21,15 +21,14 @@
         "php": "^8.1",
         "doctrine/orm": "^2.7 || ^3.0",
         "richcongress/bundle-toolbox": "*",
-        "symfony/event-dispatcher": "^5.0 || ^6.0 || ^7.0",
-        "symfony/http-foundation": "^5.0 || ^6.0 || ^7.0",
-        "symfony/security-bundle": "^5.0 || ^6.0 || ^7.0",
-        "symfony/twig-bundle": "^5.0 || ^6.0 || ^7.0"
+        "symfony/event-dispatcher": "^6.0 || ^7.0",
+        "symfony/http-foundation": "^6.0 || ^7.0",
+        "symfony/security-bundle": "^6.0 || ^7.0",
+        "symfony/twig-bundle": "^6.0 || ^7.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "richcongress/test-suite": "v0.2.x-dev",
-        "infection/infection": "^0.27"
+        "richcongress/test-suite": "^0.2"
     },
     "autoload": {
         "psr-4": {
