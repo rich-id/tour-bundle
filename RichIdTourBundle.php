@@ -36,7 +36,6 @@ class RichIdTourBundle extends AbstractBundle
             DoctrineOrmMappingsPass::createAttributeMappingDriver(
                 ['RichId\TourBundle\Entity'],
                 [__DIR__ . '/Entity'],
-                reportFieldsWhereDeclared: true
             )
         );
     }
